@@ -1,24 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UsersMS.Contracts;
+using UsersMS.Infrastructure;
 
 namespace UsersMS.Host.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly IUsersService _usersService;
+
+        public UsersController(IUsersService usersService)
+        { 
+            _usersService = usersService; 
+        }
+
         // GET: api/<UsersController>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            
-            throw new NotImplementedException();
-            //UserDTO userById = await _userService.GetUserById(id);
+            UserDTO userById = await _usersService.GetUserById(id);
 
-            //if(userById == null)
-            //{
-            //    return NotFound();
-            //}
+            if (userById == null)
+            {
+                return NotFound();
+            }
 
-            //return Ok(userById);
+            return Ok(userById);
         }
 
 
@@ -26,18 +32,30 @@ namespace UsersMS.Host.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddUserDTO userToAdd)
         {
-            throw new NotImplementedException();
+            UserDTO createdUser = await _usersService.CreateUserFromDTO(userToAdd);
 
-            //return await _userService.CreateUserFromDTO(userToAdd);
+            if (createdUser == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(createdUser);
+
         }
 
         // PUT api/<UsersController>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody] EditUserDTO userToEdit)
         {
-            throw new NotImplementedException();
+            UserDTO editedUser = await _usersService.EditUserFromDTO(userToEdit);
 
-            //return await _userService.EditUserFromDTO(userToEdit);
+            if (editedUser == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(editedUser);
+
         }
 
     }
