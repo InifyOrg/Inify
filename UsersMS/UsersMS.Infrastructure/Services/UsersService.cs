@@ -43,9 +43,26 @@ namespace UsersMS.Infrastructure.Services
             return userDTO;
         }
 
-        public Task<UserDTO> EditUserFromDTO(EditUserDTO userToEdit)
+        public async Task<bool> EditUserFromDTO(EditUserDTO userToEdit)
         {
-            throw new NotImplementedException();
+            if (userToEdit.Id > 0)
+            {
+                if (userToEdit.IsUpdated())
+                {
+
+                    User userById = await _usersDataLayer.GetUserById(userToEdit.Id);
+
+                    if (userById != null)
+                    {
+
+                        userById.UpdateFromEditUserDto(userToEdit);
+
+                        return await _usersDataLayer.Edit(userById);
+                    }
+                }
+            }
+
+            return false;
         }
 
     }

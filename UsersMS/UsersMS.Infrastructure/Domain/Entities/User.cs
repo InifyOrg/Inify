@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
+using UsersMS.Contracts;
 
 namespace UsersMS.Infrastructure.Domain.Entities
 {
@@ -25,6 +27,32 @@ namespace UsersMS.Infrastructure.Domain.Entities
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime RegisteredAt { get; set; }
+
+        public User UpdateFromEditUserDto(EditUserDTO userToEditDTO)
+        {
+            List<PropertyInfo> properties = userToEditDTO.GetProperties();
+
+            if (properties.Count > 0)
+            {
+                Type typeOfuser = this.GetType();
+                Type typeOfuserDTO = userToEditDTO.GetType();
+
+                foreach (PropertyInfo property in properties)
+                {
+                    object valueToCopy = typeOfuserDTO.GetProperty(property.Name).GetValue(userToEditDTO, null);
+
+                    PropertyInfo? propertyToUpdate = typeOfuser.GetProperty(property.Name);
+
+                    if (propertyToUpdate != null)
+                    {
+                        propertyToUpdate.SetValue(this, valueToCopy, null);
+
+                    }
+                }
+            }
+
+            return this;
+        }
 
     }
 }

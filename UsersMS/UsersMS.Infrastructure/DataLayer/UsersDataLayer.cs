@@ -9,7 +9,7 @@ using UsersMS.Infrastructure.Domain.Entities;
 
 namespace UsersMS.Infrastructure.DataLayer
 {
-    public class UserDataLayer : IUsersDataLayer
+    public class UsersDataLayer : IUsersDataLayer
     {
         public async Task<User> AddUser(User newuser)
         {
@@ -19,6 +19,20 @@ namespace UsersMS.Infrastructure.DataLayer
                 await db.SaveChangesAsync();
 
                 return newuser;
+            }
+        }
+
+        public async Task<bool> Edit(User userById)
+        {
+            using (UserMsDbContext db = new UserMsDbContext())
+            {
+                int rowsUpdated = 0;
+
+                db.Users.Update(userById);
+
+                rowsUpdated = await db.SaveChangesAsync();
+
+                return rowsUpdated > 0;
             }
         }
 

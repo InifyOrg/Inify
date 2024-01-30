@@ -1,16 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using UsersMS.Contracts;
 using UsersMS.Infrastructure;
 
 namespace UsersMS.Host.Controllers
 {
-    public class UsersController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
 
         public UsersController(IUsersService usersService)
-        { 
-            _usersService = usersService; 
+        {
+            _usersService = usersService;
         }
 
         // GET: api/<UsersController>
@@ -19,7 +22,7 @@ namespace UsersMS.Host.Controllers
         {
             UserDTO userById = await _usersService.GetUserById(id);
 
-            if (userById == null)
+            if (userById.Id < 1)
             {
                 return NotFound();
             }
@@ -34,29 +37,23 @@ namespace UsersMS.Host.Controllers
         {
             UserDTO createdUser = await _usersService.CreateUserFromDTO(userToAdd);
 
-            if (createdUser == null)
+            if (createdUser.Id < 1)
             {
                 return NotFound();
             }
 
             return Ok(createdUser);
-
         }
 
         // PUT api/<UsersController>
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody] EditUserDTO userToEdit)
         {
-            UserDTO editedUser = await _usersService.EditUserFromDTO(userToEdit);
+            bool isuserEdited = await _usersService.EditUserFromDTO(userToEdit);
 
-            if (editedUser == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(editedUser);
-
+            return Ok(isuserEdited);
         }
+
 
     }
 }
