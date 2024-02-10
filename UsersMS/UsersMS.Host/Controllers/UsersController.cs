@@ -51,7 +51,16 @@ namespace UsersMS.Host.Controllers
         {
             bool isuserEdited = await _usersService.EditUserFromDTO(userToEdit);
 
-            return Ok(isuserEdited);
+            return isuserEdited ? Ok(isuserEdited) : Unauthorized(isuserEdited);
+        }
+
+        // PUT api/<UsersController>
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] EditUserPasswordDTO userPasswordToEdit)
+        {
+            bool isuserEdited = await _usersService.EditUserPasswordFromDTO(userPasswordToEdit);
+
+            return isuserEdited ? Ok(isuserEdited) : Unauthorized(isuserEdited);
         }
 
 

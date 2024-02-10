@@ -65,5 +65,20 @@ namespace UsersMS.Infrastructure.Services
             return false;
         }
 
+        public async Task<bool> EditUserPasswordFromDTO(EditUserPasswordDTO userPasswordToEdit)
+        {
+            if (userPasswordToEdit.Id > 0)
+            {
+                User userById = await _usersDataLayer.GetUserById(userPasswordToEdit.Id);
+
+                if (_passwordService.ValidatePasswordAgainstHash(userById.PasswordHash, userPasswordToEdit.OldPassword))
+                {
+                    userById.PasswordHash = _passwordService.CreatePasswordHash(userPasswordToEdit.NewPassword);
+
+                    return await _usersDataLayer.Edit(userById);
+                }
+            }
+            return false;
+        }
     }
 }

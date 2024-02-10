@@ -6,6 +6,7 @@ namespace UsersMS.Infrastructure
     {
         Task<UserDTO> CreateUserFromDTO(AddUserDTO userToAdd);
         Task<bool> EditUserFromDTO(EditUserDTO userToEdit);
+        Task<bool> EditUserPasswordFromDTO(EditUserPasswordDTO userPasswordToEdit);
         Task<UserDTO> GetUserById(long id);
     }
 }
