@@ -1,0 +1,12 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_component",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "UserServiceAddress": "http://localhost:5107",
+  "UserServiceApiBase": "api/Users"
+}
