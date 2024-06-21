@@ -14,4 +14,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WalletsMS.Contract\WalletsMS.Contract.csproj" />
+  </ItemGroup>
+
 </Project>

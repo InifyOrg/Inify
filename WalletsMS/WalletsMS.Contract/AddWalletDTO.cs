@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace WalletsMS.Contract
 {
-    public class WalletDTO
+    public class AddWalletDTO
     {
-        public long Id {  get; set; }
         public string Address { get; set; }
         public WalletTypeDTO WalletType { get; set; }
         public long UserId { get; set; }
