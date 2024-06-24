@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletsMS.Host", "WalletsMS.Host\WalletsMS.Host.csproj", "{2DAB83E6-7D09-4892-9A36-074496D53591}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WalletsMS.Host", "WalletsMS.Host\WalletsMS.Host.csproj", "{2DAB83E6-7D09-4892-9A36-074496D53591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletsMS.Contract", "WalletsMS.Contract\WalletsMS.Contract.csproj", "{F13C07C4-E456-49C6-8A46-D1B888DA780C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WalletsMS.Contract", "WalletsMS.Contract\WalletsMS.Contract.csproj", "{F13C07C4-E456-49C6-8A46-D1B888DA780C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletsMS.Infrastructure", "WalletsMS.Infrastructure\WalletsMS.Infrastructure.csproj", "{70FD262F-23BE-4C23-95C2-01AC37BD4C05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WalletsMS.Infrastructure", "WalletsMS.Infrastructure\WalletsMS.Infrastructure.csproj", "{70FD262F-23BE-4C23-95C2-01AC37BD4C05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletsMS.Client", "WalletsMS.Client\WalletsMS.Client.csproj", "{59B7DD12-2816-4930-B1DC-A8BF80ED2E69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WalletsMS.Client", "WalletsMS.Client\WalletsMS.Client.csproj", "{59B7DD12-2816-4930-B1DC-A8BF80ED2E69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
