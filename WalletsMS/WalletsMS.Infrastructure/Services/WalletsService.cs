@@ -22,7 +22,7 @@ namespace WalletsMS.Infrastructure.Services
         {
             Wallet newWallet = addWalletFromDTO.Adapt<Wallet>();
 
-            Wallet addedWallet = await _walletsDataLayer.AddWallet(newWallet);
+            Wallet addedWallet = await _walletsDataLayer.AddWallet(newWallet, addWalletFromDTO.WalletTypeId);
 
             return addedWallet.Adapt<WalletDTO>();
         }

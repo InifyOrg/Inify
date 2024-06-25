@@ -10,7 +10,7 @@ namespace WalletsMS.Contract
     {
         public long Id {  get; set; }
         public string Address { get; set; }
-        public WalletTypeDTO WalletType { get; set; }
+        public long WalletTypeId { get; set; }
         public long UserId { get; set; }
     }
 }
