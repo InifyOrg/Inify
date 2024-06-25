@@ -27,9 +27,6 @@ namespace UsersMS.Infrastructure.Services
 
             User addedUser = await _usersDataLayer.AddUser(newuser);
 
-            UserDTO userDTO = addedUser.Adapt<UserDTO>();
-
-
             return addedUser.Adapt<UserDTO>();
 
         }

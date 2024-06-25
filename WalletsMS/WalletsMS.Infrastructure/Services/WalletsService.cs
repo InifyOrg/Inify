@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Mapster;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WalletsMS.Contract;
+using WalletsMS.Infrastructure.Domain.Entities;
 
 namespace WalletsMS.Infrastructure.Services
 {
@@ -16,24 +18,34 @@ namespace WalletsMS.Infrastructure.Services
             _walletsDataLayer = walletsDataLayer;
         }
 
-        public Task<WalletDTO> AddNewWalletFromDTO(AddWalletDTO addWalletFromDTO)
+        public async Task<WalletDTO> AddNewWalletFromDTO(AddWalletDTO addWalletFromDTO)
         {
-            throw new NotImplementedException();
+            Wallet newWallet = addWalletFromDTO.Adapt<Wallet>();
+
+            Wallet addedWallet = await _walletsDataLayer.AddWallet(newWallet);
+
+            return addedWallet.Adapt<WalletDTO>();
         }
 
-        public Task<WalletTypeDTO> AddNewWalletTypeFromDTO(AddWalletTypeDTO addWalletTypeFromDTO)
+        public async Task<WalletTypeDTO> AddNewWalletTypeFromDTO(AddWalletTypeDTO addWalletTypeFromDTO)
         {
-            throw new NotImplementedException();
+            WalletType newWalletType = addWalletTypeFromDTO.Adapt<WalletType>();
+
+            WalletType addedWalletType = await _walletsDataLayer.AddWalletType(newWalletType);
+
+            return addedWalletType.Adapt<WalletTypeDTO>();
         }
 
-        public Task<bool> DeleteWalletById(long id)
+        public async Task<bool> DeleteWalletById(long id)
         {
-            throw new NotImplementedException();
+            return await _walletsDataLayer.DeleteWalletById(id);
         }
 
-        public Task<WalletDTO> GetAllWalletsByUserId(long userId)
+        public async Task<WalletDTO> GetAllWalletsByUserId(long userId)
         {
-            throw new NotImplementedException();
+            Wallet wallet = await _walletsDataLayer.GetWalletById(userId);
+
+            return wallet.Adapt<WalletDTO>();
         }
     }
 }
