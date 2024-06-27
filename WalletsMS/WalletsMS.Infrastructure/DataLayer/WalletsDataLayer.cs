@@ -15,20 +15,15 @@ namespace WalletsMS.Infrastructure.DataLayer
         {
             using(WalletsMsDbContext db = new WalletsMsDbContext())
             {
-                try
-                {
-                    newWallet.WalletType = db.WalletTypes.Where(x => x.Id == walletTypeId).FirstOrDefault();
+                newWallet.WalletType = db.WalletTypes.Where(x => x.Id == walletTypeId).FirstOrDefault();
 
-                    db.Wallet.Add(newWallet);
+                if (newWallet.WalletType == null) return new Wallet();
+                
+                db.Wallet.Add(newWallet);
 
-                    await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
 
-                    return newWallet;
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                return newWallet;
             }
         }
 
