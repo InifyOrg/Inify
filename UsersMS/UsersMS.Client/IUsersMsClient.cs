@@ -7,7 +7,7 @@ using UsersMS.Contracts;
 
 namespace UsersMS.Client
 {
-    interface IUsersMsClient
+    public interface IUsersMsClient
     {
         public Task<UserDTO> GetUserByID(long id);
         public Task<UserDTO> CreateUser(AddUserDTO userToAdd);

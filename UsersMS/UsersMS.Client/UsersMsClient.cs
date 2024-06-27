@@ -9,7 +9,7 @@ using UsersMS.Contracts;
 
 namespace UsersMS.Client
 {
-    class UsersMsClient : IUsersMsClient
+    public class UsersMsClient : IUsersMsClient
     {
         private readonly string? _serviceAddress;
         private readonly string? _apiBaseAddress;
