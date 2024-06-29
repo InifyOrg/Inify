@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsersMS.Contracts", "UsersM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsersMS.Infrastructure", "UsersMS.Infrastructure\UsersMS.Infrastructure.csproj", "{7BF3F45B-CDD9-450C-B7F3-F6B381FE2516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsersMS.Client", "UsersMS.Client\UsersMS.Client.csproj", "{F9B7E812-ED04-4544-B910-977FFE63C6DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsersMS.Client", "UsersMS.Client\UsersMS.Client.csproj", "{F9B7E812-ED04-4544-B910-977FFE63C6DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
