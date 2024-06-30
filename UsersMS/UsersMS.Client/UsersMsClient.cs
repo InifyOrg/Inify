@@ -33,12 +33,12 @@ namespace UsersMS.Client
             throw new NotImplementedException();
         }
 
-        public async Task<UserDTO> EditUser(EditUserDTO userToAdd)
+        public async Task<bool> EditUser(EditUserDTO userToAdd)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<UserDTO> EditUserPassword(EditUserPasswordDTO userToAdd)
+        public async Task<bool> EditUserPassword(EditUserPasswordDTO userToAdd)
         {
             throw new NotImplementedException();
         }

@@ -11,8 +11,8 @@ namespace UsersMS.Client
     {
         public Task<UserDTO> GetUserByID(long id);
         public Task<UserDTO> CreateUser(AddUserDTO userToAdd);
-        public Task<UserDTO> EditUser(EditUserDTO userToAdd);
-        public Task<UserDTO> EditUserPassword(EditUserPasswordDTO userToAdd);
+        public Task<bool> EditUser(EditUserDTO userToAdd);
+        public Task<bool> EditUserPassword(EditUserPasswordDTO userToAdd);
 
     }
 }
