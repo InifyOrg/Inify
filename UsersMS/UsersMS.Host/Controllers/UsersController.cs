@@ -18,7 +18,7 @@ namespace UsersMS.Host.Controllers
 
         // GET: api/<UsersController>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(long id)
+        public async Task<IActionResult> GetUserById(long id)
         {
             UserDTO userById = await _usersService.GetUserById(id);
 
@@ -32,8 +32,8 @@ namespace UsersMS.Host.Controllers
 
 
         // POST api/<UsersController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AddUserDTO userToAdd)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] AddUserDTO userToAdd)
         {
             UserDTO createdUser = await _usersService.CreateUserFromDTO(userToAdd);
 
@@ -45,9 +45,28 @@ namespace UsersMS.Host.Controllers
             return Ok(createdUser);
         }
 
+        // POST api/<UsersController>
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
+        {
+            //TODO: 
+            // 1. get user by email
+            // 2. check user password
+            // 3. if password correct generate jwt token
+            throw new NotImplementedException();
+
+        }
+        
+        // POST api/<UsersController>
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            throw new NotImplementedException();
+        }
+
         // PUT api/<UsersController>
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] EditUserDTO userToEdit)
+        [HttpPut("editUser")]
+        public async Task<IActionResult> EditUser([FromBody] EditUserDTO userToEdit)
         {
             bool isuserEdited = await _usersService.EditUserFromDTO(userToEdit);
 
@@ -55,8 +74,8 @@ namespace UsersMS.Host.Controllers
         }
 
         // PUT api/<UsersController>
-        [HttpPut("changePassword")]
-        public async Task<IActionResult> ChangePassword([FromBody] EditUserPasswordDTO userPasswordToEdit)
+        [HttpPut("editPassword")]
+        public async Task<IActionResult> EditPassword([FromBody] EditUserPasswordDTO userPasswordToEdit)
         {
             bool isuserEdited = await _usersService.EditUserPasswordFromDTO(userPasswordToEdit);
 
