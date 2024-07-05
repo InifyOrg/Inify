@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UsersMS.Infrastructure.Domain.DbCtx;
 
@@ -11,9 +12,11 @@ using UsersMS.Infrastructure.Domain.DbCtx;
 namespace UsersMS.Infrastructure.Migrations
 {
     [DbContext(typeof(UserMsDbContext))]
-    partial class UserMsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240705142145_Add_AccessToken_Table")]
+    partial class Add_AccessToken_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

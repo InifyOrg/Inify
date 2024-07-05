@@ -22,5 +22,6 @@ namespace UsersMS.Infrastructure.Domain.DbCtx
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<AccessToken> AccessTokens { get; set; }
     }
 }
