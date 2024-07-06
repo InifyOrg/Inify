@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using UsersMS.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace UsersMS.Infrastructure.Domain.Entities
 {

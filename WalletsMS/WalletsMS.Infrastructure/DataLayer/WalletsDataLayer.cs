@@ -15,7 +15,7 @@ namespace WalletsMS.Infrastructure.DataLayer
         {
             using(WalletsMsDbContext db = new WalletsMsDbContext())
             {
-                newWallet.WalletType = db.WalletTypes.Where(x => x.Id == walletTypeId).FirstOrDefault();
+                newWallet.WalletType = await db.WalletTypes.Where(x => x.Id == walletTypeId).FirstOrDefaultAsync();
 
                 if (newWallet.WalletType == null) return new Wallet();
                 

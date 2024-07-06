@@ -13,11 +13,13 @@ namespace UsersMS.Infrastructure.Services
     {
         private readonly IPasswordService _passwordService;
         private readonly IUsersDataLayer _usersDataLayer;
+        private readonly IAccessTokenService _accessTokenService;
 
-        public UsersService(IPasswordService passwordService, IUsersDataLayer usersDataLayer)
+        public UsersService(IPasswordService passwordService, IUsersDataLayer usersDataLayer, IAccessTokenService accessTokenService)
         {
             _passwordService = passwordService;
             _usersDataLayer = usersDataLayer;
+            _accessTokenService = accessTokenService;
         }
 
         public async Task<UserDTO> CreateUserFromDTO(AddUserDTO userToAdd)
@@ -76,6 +78,37 @@ namespace UsersMS.Infrastructure.Services
                 }
             }
             return false;
+        }
+
+        public async Task<AccessTokenDTO> LoginFromDTO(LoginDTO loginDTO)
+        {
+            AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
+            User userByEmail = await _usersDataLayer.GetUserByEmail(loginDTO.Email);
+
+            if (userByEmail.Id > 0 && _passwordService.ValidatePasswordAgainstHash(userByEmail.PasswordHash, loginDTO.Password)) 
+            {
+                string jwtToken = _accessTokenService.GenerateAccessTokenFromUser(userByEmail);
+                if (!string.IsNullOrEmpty(jwtToken))
+                {
+                    accessTokenDTO.Token = jwtToken;
+
+                    AccessToken newAccessToken = accessTokenDTO.Adapt<AccessToken>();
+                    AccessToken addedAccessToken = await _usersDataLayer.AddAccessToken(newAccessToken, userByEmail.Id);
+
+                    accessTokenDTO = addedAccessToken.Adapt<AccessTokenDTO>();
+                }
+            }
+            
+            return accessTokenDTO;
+        }
+
+        public async Task<UserDTO> GetUserByEmail(string email)
+        {
+            User userByEmail = await _usersDataLayer.GetUserByEmail(email);
+
+            UserDTO userDTO = userByEmail.Adapt<UserDTO>();
+
+            return userDTO;
         }
     }
 }

@@ -49,12 +49,10 @@ namespace UsersMS.Host.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
         {
-            //TODO: 
-            // 1. get user by email
-            // 2. check user password
-            // 3. if password correct generate jwt token
-            throw new NotImplementedException();
-
+            AccessTokenDTO accessTokenDTO = await _usersService.LoginFromDTO(loginDTO);
+            if (accessTokenDTO.Id < 1)
+                return BadRequest("Wrong input data");
+            return Ok(accessTokenDTO);
         }
         
         // POST api/<UsersController>

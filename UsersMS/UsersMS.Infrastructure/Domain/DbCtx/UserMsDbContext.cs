@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,13 @@ namespace UsersMS.Infrastructure.Domain.DbCtx
                 .Build();
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("UsersMsDb"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(c => new { c.Email })
+                .IsUnique(true);
         }
 
         public DbSet<User> Users { get; set; }

@@ -16,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IPasswordService, PasswordService>();
+builder.Services.AddTransient<IAccessTokenService, AccessTokenService>();
 builder.Services.AddTransient<IUsersDataLayer, UsersDataLayer>();
 
 builder.Services.AddScoped<IUsersService, UsersService>();
