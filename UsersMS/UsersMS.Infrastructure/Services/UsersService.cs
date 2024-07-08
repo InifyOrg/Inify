@@ -80,26 +80,16 @@ namespace UsersMS.Infrastructure.Services
             return false;
         }
 
-        public async Task<AccessTokenDTO> LoginFromDTO(LoginDTO loginDTO)
+        public async Task<string> LoginFromDTO(LoginDTO loginDTO)
         {
-            AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
             User userByEmail = await _usersDataLayer.GetUserByEmail(loginDTO.Email);
 
             if (userByEmail.Id > 0 && _passwordService.ValidatePasswordAgainstHash(userByEmail.PasswordHash, loginDTO.Password)) 
             {
                 string jwtToken = _accessTokenService.GenerateAccessTokenFromUser(userByEmail);
-                if (!string.IsNullOrEmpty(jwtToken))
-                {
-                    accessTokenDTO.Token = jwtToken;
-
-                    AccessToken newAccessToken = accessTokenDTO.Adapt<AccessToken>();
-                    AccessToken addedAccessToken = await _usersDataLayer.AddAccessToken(newAccessToken, userByEmail.Id);
-
-                    accessTokenDTO = addedAccessToken.Adapt<AccessTokenDTO>();
-                }
+                return jwtToken;
             }
-            
-            return accessTokenDTO;
+            return "";
         }
 
         public async Task<UserDTO> GetUserByEmail(string email)

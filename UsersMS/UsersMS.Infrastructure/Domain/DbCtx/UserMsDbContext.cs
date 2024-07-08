@@ -22,14 +22,6 @@ namespace UsersMS.Infrastructure.Domain.DbCtx
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("UsersMsDb"));
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>()
-                .HasIndex(c => new { c.Email })
-                .IsUnique(true);
-        }
-
         public DbSet<User> Users { get; set; }
-        public DbSet<AccessToken> AccessTokens { get; set; }
     }
 }

@@ -10,14 +10,15 @@ namespace UsersMS.Host.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
-
-        public UsersController(IUsersService usersService)
+        private readonly IAccessTokenService _accessTokenService;
+        public UsersController(IUsersService usersService, IAccessTokenService accessTokenService)
         {
             _usersService = usersService;
+            _accessTokenService = accessTokenService;
         }
 
         // GET: api/<UsersController>
-        [HttpGet("{id}")]
+        [HttpGet("getUserById/{id}")]
         public async Task<IActionResult> GetUserById(long id)
         {
             UserDTO userById = await _usersService.GetUserById(id);
@@ -30,6 +31,27 @@ namespace UsersMS.Host.Controllers
             return Ok(userById);
         }
 
+        // GET: api/<UsersController>
+        [HttpGet("getUserByEmail/{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            UserDTO userById = await _usersService.GetUserByEmail(email);
+
+            if (userById.Id < 1)
+            {
+                return NotFound();
+            }
+
+            return Ok(userById);
+        }
+        // POST api/<UsersController>
+        [HttpGet("validateLogin/{token}")]
+        public async Task<IActionResult> ValidateLogin(string token)
+        {
+            bool isTokenValid = await _accessTokenService.ValidateAccessToken(token);
+
+            return isTokenValid ? Ok(isTokenValid) : NotFound(isTokenValid);
+        }
 
         // POST api/<UsersController>
         [HttpPost("register")]
@@ -49,10 +71,10 @@ namespace UsersMS.Host.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
         {
-            AccessTokenDTO accessTokenDTO = await _usersService.LoginFromDTO(loginDTO);
-            if (accessTokenDTO.Id < 1)
+            string accessToken = await _usersService.LoginFromDTO(loginDTO);
+            if (accessToken == "")
                 return BadRequest("Wrong input data");
-            return Ok(accessTokenDTO);
+            return Ok(accessToken);
         }
         
         // POST api/<UsersController>

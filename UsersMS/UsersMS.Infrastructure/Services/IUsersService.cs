@@ -9,6 +9,6 @@ namespace UsersMS.Infrastructure
         Task<bool> EditUserPasswordFromDTO(EditUserPasswordDTO userPasswordToEdit);
         Task<UserDTO> GetUserById(long id);
         Task<UserDTO> GetUserByEmail(string email);
-        Task<AccessTokenDTO> LoginFromDTO(LoginDTO loginDTO);
+        Task<string> LoginFromDTO(LoginDTO loginDTO);
     }
 }

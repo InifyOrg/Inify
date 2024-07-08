@@ -5,6 +5,6 @@ namespace UsersMS.Infrastructure
     public interface IAccessTokenService
     {
         string GenerateAccessTokenFromUser(User userByEmail);
-        bool ValidateAccessToken(string jwtToken);
+        Task<bool> ValidateAccessToken(string jwtToken);
     }
 }

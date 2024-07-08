@@ -11,22 +11,6 @@ namespace UsersMS.Infrastructure.DataLayer
 {
     public class UsersDataLayer : IUsersDataLayer
     {
-        public async Task<AccessToken> AddAccessToken(AccessToken newAccessToken, long userId)
-        {
-            using (UserMsDbContext db = new UserMsDbContext())
-            {
-                newAccessToken.User = await db.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
-
-                if (newAccessToken.User == null) return new AccessToken();
-
-                db.AccessTokens.Add(newAccessToken);
-
-                await db.SaveChangesAsync();
-
-                return newAccessToken;
-            }
-        }
-
         public async Task<User> AddUser(User newuser)
         {
             using (UserMsDbContext db = new UserMsDbContext())
