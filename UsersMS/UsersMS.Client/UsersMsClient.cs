@@ -49,7 +49,7 @@ namespace UsersMS.Client
 
             if (_configurationReady)
             {
-                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/{id}";
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/getUserById/{id}";
 
                 HttpResponseMessage userMsResponce = await _httpClient.GetAsync(requestAddress);
 
@@ -60,6 +60,23 @@ namespace UsersMS.Client
             }
 
             return userById;
+        }
+
+        public async Task<bool> ValidateAccessToken(string accessToken)
+        {
+
+            if (_configurationReady)
+            {
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/validateLogin/{accessToken}";
+
+                HttpResponseMessage userMsResponce = await _httpClient.GetAsync(requestAddress);
+
+                string json = await userMsResponce.Content.ReadAsStringAsync();
+
+                return bool.Parse(json);
+            }
+
+            return false;
         }
     }
 }

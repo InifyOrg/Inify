@@ -13,6 +13,6 @@ namespace UsersMS.Client
         public Task<UserDTO> CreateUser(AddUserDTO userToAdd);
         public Task<bool> EditUser(EditUserDTO userToAdd);
         public Task<bool> EditUserPassword(EditUserPasswordDTO userToAdd);
-
+        public Task<bool> ValidateAccessToken(string accessToken);
     }
 }

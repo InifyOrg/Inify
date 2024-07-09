@@ -1,0 +1,6 @@
+﻿using UsersMS.Client;
+
+UsersMsClient client = new UsersMsClient();
+
+bool res = await client.ValidateAccessToken("eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0MjVAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlRlc3QyNSIsImV4cCI6MTcyMTEzNTg3NH0.6giSQu-PgmVzYY5j5JGc2WQ1SQIhveBvJ_WUtIMN36w");
+Console.WriteLine(res);
