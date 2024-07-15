@@ -19,9 +19,9 @@ namespace WalletsMS.Host.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetAllWalletsByUserId(long userId)
         {
-            WalletDTO walletByUserId = await _walletsService.GetAllWalletsByUserId(userId);
+            List<WalletDTO> walletByUserId = await _walletsService.GetAllWalletsByUserId(userId);
 
-            if(walletByUserId.Id < 1)
+            if(walletByUserId.Count < 1)
             {
                 return NotFound();
             }

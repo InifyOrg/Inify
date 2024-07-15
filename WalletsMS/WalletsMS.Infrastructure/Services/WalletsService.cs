@@ -50,11 +50,12 @@ namespace WalletsMS.Infrastructure.Services
             return await _walletsDataLayer.DeleteWalletById(id);
         }
 
-        public async Task<WalletDTO> GetAllWalletsByUserId(long userId)
+        public async Task<List<WalletDTO>> GetAllWalletsByUserId(long userId)
         {
-            Wallet wallet = await _walletsDataLayer.GetWalletById(userId);
+            List<Wallet> wallets = await _walletsDataLayer.GetWalletsById(userId);
 
-            return wallet.Adapt<WalletDTO>();
+
+            return wallets.Adapt<List<WalletDTO>>();
         }
     }
 }

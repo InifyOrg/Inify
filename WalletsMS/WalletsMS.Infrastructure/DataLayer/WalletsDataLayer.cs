@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WalletsMS.Infrastructure.Domain.DbCtx;
@@ -52,13 +53,26 @@ namespace WalletsMS.Infrastructure.DataLayer
             }
         }
 
-        public async Task<Wallet> GetWalletById(long userId)
+        public async Task<List<Wallet>> GetWalletsById(long userId)
         {
             using (WalletsMsDbContext db = new WalletsMsDbContext())
             {
-                Wallet walletById = await db.Wallet.FirstOrDefaultAsync(x => x.UserId == userId);
+                List<Wallet> walletsById = (from w in db.Wallet 
+                                           join wt in db.WalletTypes 
+                                           on w.WalletType.Id equals wt.Id
+                                           where w.UserId == userId 
+                                           select new Wallet { 
+                                               Id = w.Id, 
+                                               Address = w.Address, 
+                                               WalletType = new WalletType 
+                                               { 
+                                                   Id = wt.Id, 
+                                                   Title = wt.Title 
+                                               }, 
+                                               UserId = w.UserId 
+                                           }).ToList();
 
-                return walletById != null ? walletById : new Wallet();
+                return walletsById != null ? walletsById : new List<Wallet>();
             }
         }
     }
