@@ -9,8 +9,6 @@
   <ItemGroup>
     <Folder Include="DataLayer\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Web3DTOs\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +24,10 @@
     <PackageReference Include="Nethereum.Hex" Version="4.21.2" />
     <PackageReference Include="Nethereum.JsonRpc.RpcClient" Version="4.21.2" />
     <PackageReference Include="Nethereum.Web3" Version="4.21.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TokensMS.Contract\TokensMS.Contract.csproj" />
   </ItemGroup>
 
 </Project>
