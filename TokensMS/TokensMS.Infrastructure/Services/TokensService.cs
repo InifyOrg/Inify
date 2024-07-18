@@ -33,7 +33,10 @@ namespace TokensMS.Infrastructure.Services
             Token newToken = addTokenDTO.Adapt<Token>();
 
             newToken.Decimals = await _web3Service.GetDecimalsByAddress(newToken.Address);
-            throw new NotImplementedException();
+
+            Token addedToken = await _tokensDataLayer.AddToken(newToken);
+
+            return addedToken.Adapt<TokenDTO>();
         }
 
         public async Task<WalletTypeDTO> AddNewWalletTypeFromDTO(AddWalletTypeDTO addWalletTypeDTO)
@@ -45,14 +48,18 @@ namespace TokensMS.Infrastructure.Services
             return addedWalletType.Adapt<WalletTypeDTO>();
         }
 
-        public Task<List<TokenDTO>> GetAllTokens()
+        public async Task<List<TokenDTO>> GetAllTokens()
         {
-            throw new NotImplementedException();
+            List<Token> tokens = await _tokensDataLayer.GetAll();
+
+            return tokens.Adapt<List<TokenDTO>>();
         }
 
-        public Task<List<TokenDTO>> GetAllTokensByWalletType(string walletType)
+        public async Task<List<TokenDTO>> GetAllTokensByWalletType(string walletType)
         {
-            throw new NotImplementedException();
+            List<Token> tokens = await _tokensDataLayer.GetAllByWalletType(walletType);
+
+            return tokens.Adapt<List<TokenDTO>>();
         }
     }
 }
