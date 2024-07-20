@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TokensMS.Contract;
 using TokensMS.Infrastructure;
+using TokensMS.Infrastructure.Services;
 
 namespace TokensMS.Host.Controllers
 {
@@ -10,10 +11,12 @@ namespace TokensMS.Host.Controllers
     public class TokensController : ControllerBase
     {
         private readonly ITokensService _tokensService;
+        private readonly ICoinMarketCapService _coinMarketCapService;
 
-        public TokensController(ITokensService tokensService)
+        public TokensController(ITokensService tokensService, ICoinMarketCapService coinMarketCapService)
         {
             _tokensService = tokensService;
+            _coinMarketCapService = coinMarketCapService;
         }
 
 
@@ -65,6 +68,13 @@ namespace TokensMS.Host.Controllers
             if (walletTypeFromDto.Id < 1)
                 return NotFound();
             return Ok(walletTypeFromDto);
+        }
+
+        [HttpPost("addNewTokensFromCoinMarketCap")]
+        public async Task<IActionResult> AddNewTokensFromCoinMarketCap()
+        {
+            string res = await _coinMarketCapService.GetTokensJson();
+            throw new NotImplementedException();
         }
     }
 }

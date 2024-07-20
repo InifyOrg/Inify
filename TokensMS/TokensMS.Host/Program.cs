@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokensService, TokensService>();
 builder.Services.AddScoped<IWeb3Service, Web3Service>();
+builder.Services.AddScoped<ICoinMarketCapService, CoinMarketCapService>();
 builder.Services.AddTransient<ITokensDataLayer, TokensDataLayer>();
 
 var app = builder.Build();

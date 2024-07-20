@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokensMS.Host", "TokensMS.H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokensMS.Contract", "TokensMS.Contract\TokensMS.Contract.csproj", "{A49244F4-D3C8-4FCB-AAA8-1BE7884782B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokensMS.Infrastructure", "TokensMS.Infrastructure\TokensMS.Infrastructure.csproj", "{3D93AAB1-3126-4C5E-8636-9334C710519D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokensMS.Infrastructure", "TokensMS.Infrastructure\TokensMS.Infrastructure.csproj", "{3D93AAB1-3126-4C5E-8636-9334C710519D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
