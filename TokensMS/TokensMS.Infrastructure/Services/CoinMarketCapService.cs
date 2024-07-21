@@ -4,7 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using TokensMS.Contract;
+using TokensMS.Infrastructure.Web3DTOs;
 
 namespace TokensMS.Infrastructure.Services
 {
@@ -27,7 +31,7 @@ namespace TokensMS.Infrastructure.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> GetTokensJson()
+        private async Task<string> GetTokensJson()
         {
             string json = "";
 
@@ -42,10 +46,25 @@ namespace TokensMS.Infrastructure.Services
                 HttpResponseMessage httpResponce = await _httpClient.SendAsync(httpRequest);
 
                 json = await httpResponce.Content.ReadAsStringAsync();
-
+                
             }
 
             return json;
+        }
+
+        public async Task<List<TokenDTO>> UpdateDatabase()
+        {
+            string json = await GetTokensJson();
+
+            CoinMarketCapApiMapResponceDTO responceDTO = JsonSerializer.Deserialize<CoinMarketCapApiMapResponceDTO>(json);
+            List<CoinMarketCapTokenDTO> coinMarketCapFilteredTokens = new List<CoinMarketCapTokenDTO>(responceDTO.data.Where(d => d.platform != null && d.platform.slug == "ethereum").ToList());
+            List<AddTokenDTO> tokensToAdd = new List<AddTokenDTO>();
+            
+            //foreach(CoinMarketCapTokenDTO coinMarketCapToken in coinMarketCapFilteredTokens)
+            //{
+
+            //}
+            throw new NotImplementedException();
         }
     }
 }

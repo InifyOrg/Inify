@@ -50,7 +50,7 @@ namespace TokensMS.Infrastructure.DataLayer
         {
             using (TokensMsDbContext db = new TokensMsDbContext())
             {
-                List<Token> tokens = await db.Tokens.ToListAsync();
+                List<Token> tokens = await db.Tokens.Include(t => t.Platform).Include(t => t.WalletType).ToListAsync();
 
                 return tokens != null ? tokens : new List<Token>();
             }
@@ -60,7 +60,7 @@ namespace TokensMS.Infrastructure.DataLayer
         {
             using (TokensMsDbContext db = new TokensMsDbContext())
             {
-                List<Token> tokens = await db.Tokens.Where(t => t.WalletType.Title == walletType).ToListAsync();
+                List<Token> tokens = await db.Tokens.Where(t => t.WalletType.Title == walletType).Include(t => t.Platform).Include(t => t.WalletType).ToListAsync();
 
                 return tokens != null ? tokens : new List<Token>();
             }

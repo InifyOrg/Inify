@@ -73,7 +73,7 @@ namespace TokensMS.Host.Controllers
         [HttpPost("addNewTokensFromCoinMarketCap")]
         public async Task<IActionResult> AddNewTokensFromCoinMarketCap()
         {
-            string res = await _coinMarketCapService.GetTokensJson();
+            List<TokenDTO> res = await _coinMarketCapService.UpdateDatabase();
             throw new NotImplementedException();
         }
     }
