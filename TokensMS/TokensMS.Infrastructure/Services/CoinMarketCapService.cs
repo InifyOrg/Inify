@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Mapster;
+using Microsoft.Extensions.Configuration;
 using Nethereum.ABI.CompilationMetadata;
 using System;
 using System.Collections.Generic;
@@ -58,13 +59,15 @@ namespace TokensMS.Infrastructure.Services
 
             CoinMarketCapApiMapResponceDTO responceDTO = JsonSerializer.Deserialize<CoinMarketCapApiMapResponceDTO>(json);
             List<CoinMarketCapTokenDTO> coinMarketCapFilteredTokens = new List<CoinMarketCapTokenDTO>(responceDTO.data.Where(d => d.platform != null && d.platform.slug == "ethereum").ToList());
-            List<AddTokenDTO> tokensToAdd = new List<AddTokenDTO>();
+            List<AddTokenDTO> tokensToAdd = coinMarketCapFilteredTokens.Adapt<List<AddTokenDTO>>();
             
-            //foreach(CoinMarketCapTokenDTO coinMarketCapToken in coinMarketCapFilteredTokens)
-            //{
+            for(int i = 0; i<tokensToAdd.Count; i++)
+            {
+                tokensToAdd[i].Address = coinMarketCapFilteredTokens[i].platform.token_address;
+                tokensToAdd[i].WalletType = new AddWalletTypeDTO() { Title= "EVM" };
+            }
 
-            //}
-            throw new NotImplementedException();
+            return tokensToAdd.Adapt<List<TokenDTO>>();
         }
     }
 }
