@@ -22,6 +22,12 @@ namespace TokensMS.Infrastructure.DataLayer
             }
         }
 
+        public Task<List<Token>> AddRangeTokens(List<Token> newTokens)
+        {
+
+            return Task.FromResult( newTokens);
+        }
+
         public async Task<Token> AddToken(Token newToken)
         {
             using (TokensMsDbContext db = new TokensMsDbContext())
@@ -64,6 +70,11 @@ namespace TokensMS.Infrastructure.DataLayer
 
                 return tokens != null ? tokens : new List<Token>();
             }
+        }
+
+        public Task<List<Platform>> GetAllPlatforms()
+        {
+            throw new NotImplementedException();
         }
     }
 }
