@@ -66,11 +66,11 @@ namespace TokensMS.Infrastructure.Services
 
             CoinMarketCapApiMapResponceDTO responceDTO = JsonSerializer.Deserialize<CoinMarketCapApiMapResponceDTO>(json);
             //ToDo: сделать чтобы вытаскивались данные не только о ethereum а о всех слагах которые добавлены в бд платформ
-            List<CoinMarketCapTokenDTO> coinMarketCapFilteredTokens = new List<CoinMarketCapTokenDTO>(responceDTO.data.Where(d => d.platform != null && d.platform.slug == "ethereum").ToList());
-            List<TokenDTO> adaptedTokens = coinMarketCapFilteredTokens.Adapt<List<TokenDTO>>();
+            List<CoinMarketCapTokenDTO> coinMarketCapFilteredTokens = new List<CoinMarketCapTokenDTO>(responceDTO.data.Where(d => d.platform != null && d.platform.slug == "ethereum").ToList().OrderBy(token => token.rank));
+            List<TokenDTO> adaptedTokens = coinMarketCapFilteredTokens.Adapt<List<TokenDTO>>().GetRange(0, 50);
             List<TokenDTO> tokensToAdd = new List<TokenDTO>();
 
-            for (int i = 0; i< adaptedTokens.Count; i++)
+            for (int i = 0; i < adaptedTokens.Count; i++)
             {
                 adaptedTokens[i].Address = coinMarketCapFilteredTokens[i].platform.token_address;
                 //ToDo: сделать связь между платформами и типами кошельков (ethereum == EVM | bnb == EVM, etc..)

@@ -15,6 +15,7 @@ namespace TokensMS.Infrastructure.Web3DTOs
         public string symbol { get; set; }
         [AdaptMember("Slug")]
         public string slug { get; set; }
+        public int rank { get; set; }
         [AdaptMember("Platform")]
         public CoinMarketCapPlatformDTO platform { get; set; }
     }
