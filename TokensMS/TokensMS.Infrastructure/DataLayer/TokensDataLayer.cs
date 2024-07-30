@@ -22,10 +22,20 @@ namespace TokensMS.Infrastructure.DataLayer
             }
         }
 
-        public Task<List<Token>> AddRangeTokens(List<Token> newTokens)
+        public async Task<List<Token>> AddRangeTokens(List<Token> newTokens)
         {
+            using (TokensMsDbContext db = new TokensMsDbContext())
+            {
+                for (int i = 0; i < newTokens.Count; i++)
+                {
+                    newTokens[i].WalletType = await db.WalletTypes.Where(wt => wt.Title == newTokens[i].WalletType.Title).FirstOrDefaultAsync();
+                    newTokens[i].Platform = await db.Platforms.Where(wt => wt.Slug == newTokens[i].Platform.Slug).FirstOrDefaultAsync();
+                }
+                await db.AddRangeAsync(newTokens);
+                await db.SaveChangesAsync();
 
-            return Task.FromResult( newTokens);
+                return newTokens;
+            }
         }
 
         public async Task<Token> AddToken(Token newToken)
