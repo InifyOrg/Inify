@@ -10,9 +10,8 @@ namespace WalletsMS.Client
     public interface IWalletsMsClient
     {
         Task<WalletDTO> AddNewWalletFromDTO(AddWalletDTO addWalletFromDTO);
-        Task<WalletTypeDTO> AddNewWalletTypeFromDTO(AddWalletTypeDTO addWalletTypeFromDTO);
         Task<bool> DeleteWalletById(long id);
-        Task<WalletDTO> GetAllWalletsByUserId(long userId);
+        Task<List<WalletDTO>> GetAllWalletsByUserId(long userId);
 
     }
 }

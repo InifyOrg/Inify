@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WalletsMS.Contract;
 
@@ -32,19 +33,28 @@ namespace WalletsMS.Client
             throw new NotImplementedException();
         }
 
-        public Task<WalletTypeDTO> AddNewWalletTypeFromDTO(AddWalletTypeDTO addWalletTypeFromDTO)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<bool> DeleteWalletById(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<WalletDTO> GetAllWalletsByUserId(long userId)
+        public async Task<List<WalletDTO>> GetAllWalletsByUserId(long userId)
         {
-            throw new NotImplementedException();
+            List<WalletDTO> wallets = new List<WalletDTO>();
+
+            if (_configurationReady)
+            {
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/getAllTokensByWalletType/{userId}";
+
+                HttpResponseMessage walletsMsResponce = await _httpClient.GetAsync(requestAddress);
+
+                string jsonWallet = await walletsMsResponce.Content.ReadAsStringAsync();
+
+                wallets = JsonSerializer.Deserialize<List<WalletDTO>>(jsonWallet);
+                return wallets;
+            }
+
+            return wallets;
         }
     }
 }
