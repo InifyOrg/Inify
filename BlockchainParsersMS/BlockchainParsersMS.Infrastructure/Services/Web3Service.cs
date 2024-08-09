@@ -23,8 +23,9 @@ namespace BlockchainParsersMS.Infrastructure.Services
             _web3 = new Web3(configuration.GetSection("APIs:InfuraEthNode").Value);
         }
 
-        public Task<ParsedTokenDTO> parseBaseErcToken(string address)
+        public async Task<ParsedTokenDTO> parseBaseErcToken(WalletInfoDTO walletInfo)
         {
+            decimal amount = Web3.Convert.FromWei(await _web3.Eth.GetBalance.SendRequestAsync(walletInfo.Address));
             throw new NotImplementedException();
         }
     }
