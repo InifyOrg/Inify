@@ -23,9 +23,9 @@ namespace BlockchainParsersMS.Host.Controllers
         }
 
         [HttpGet("parseOneByAddress/{address}")]
-        public async Task<IActionResult> parseOneByAddress(string address)
+        public async Task<IActionResult> parseOneByAddress(WalletInfoDTO walletInfo)
         {
-            List<ParsedTokenDTO> parsedTokens = await _blockchainParserService.parseOneByAddress(address);
+            List<ParsedTokenDTO> parsedTokens = await _blockchainParserService.parseOneByAddress(walletInfo);
 
             if(parsedTokens.Count < 1)
                 return NotFound();

@@ -18,9 +18,9 @@ namespace BlockchainParsersMS.Infrastructure.Services
             _web3Service = web3Service;
         }
 
-        public async Task<List<ParsedTokenDTO>> parseOneByAddress(string address)
+        public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletInfoDTO walletInfo)
         {
-            ParsedTokenDTO parsedBaseToken = await _web3Service.parseBaseErcToken(address);
+            ParsedTokenDTO parsedBaseToken = await _web3Service.parseBaseErcToken(walletInfo);
             throw new NotImplementedException();
         }
     }
