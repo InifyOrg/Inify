@@ -22,8 +22,8 @@ namespace BlockchainParsersMS.Host.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("parseOneByAddress/{address}")]
-        public async Task<IActionResult> parseOneByAddress(WalletInfoDTO walletInfo)
+        [HttpGet("parseOneByAddress")]
+        public async Task<IActionResult> parseOneByAddress([FromQuery] WalletInfoDTO walletInfo)
         {
             List<ParsedTokenDTO> parsedTokens = await _blockchainParserService.parseOneByAddress(walletInfo);
 

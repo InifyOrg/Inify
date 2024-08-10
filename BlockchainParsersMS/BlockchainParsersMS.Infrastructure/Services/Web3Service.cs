@@ -25,8 +25,16 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
         public async Task<ParsedTokenDTO> parseBaseErcToken(WalletInfoDTO walletInfo)
         {
-            decimal amount = Web3.Convert.FromWei(await _web3.Eth.GetBalance.SendRequestAsync(walletInfo.Address));
-            throw new NotImplementedException();
+            ParsedTokenDTO result = new ParsedTokenDTO() { WalletInfo = walletInfo };
+            result.Amount = Web3.Convert.FromWei(await _web3.Eth.GetBalance.SendRequestAsync(walletInfo.Address));
+            result.Platform = "ethereum";
+            result.Name = "Ethereum";
+            result.Symbol = "ETH";
+            result.Chain = "ERC-20";
+            result.Price = 1;
+            result.UsdValue = result.Amount * result.Price;
+            return result;
         }
+
     }
 }
