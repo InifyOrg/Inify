@@ -12,8 +12,8 @@ namespace BlockchainParsersMS.Infrastructure.Services
     public class Web3Service : IWeb3Service
     {
         private readonly Web3 _web3;
-
-        public Web3Service()
+        private readonly ICoinGeckoService _coinGeckoService;
+        public Web3Service(ICoinGeckoService coinGeckoService)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
@@ -21,6 +21,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
                 .Build();
 
             _web3 = new Web3(configuration.GetSection("APIs:InfuraEthNode").Value);
+            _coinGeckoService = coinGeckoService;
         }
 
         public async Task<ParsedTokenDTO> parseBaseErcToken(WalletInfoDTO walletInfo)
@@ -31,7 +32,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             result.Name = "Ethereum";
             result.Symbol = "ETH";
             result.Chain = "ERC-20";
-            result.Price = 1;
+            result.Price = await _coinGeckoService.GetPriceByCoinId(result.Name.ToLower());
             result.UsdValue = result.Amount * result.Price;
             return result;
         }
