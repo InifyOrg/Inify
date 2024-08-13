@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IWeb3Service, Web3Service>();
 builder.Services.AddScoped<IBlockchainParserService, BlockchainParserService>();
+builder.Services.AddScoped<ICoinGeckoService, CoinGeckoService>();
 
 var app = builder.Build();
 

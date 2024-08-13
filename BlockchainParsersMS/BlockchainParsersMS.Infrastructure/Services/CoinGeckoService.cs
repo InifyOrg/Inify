@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using BlockchainParsersMS.Infrastructure.Web3DTOs;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BlockchainParsersMS.Infrastructure.Services
@@ -27,9 +30,28 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
         }
 
-        public Task<decimal> GetPriceByCoinId(string id)
+        public async Task<decimal> GetPriceByCoinId(string id)
         {
-            throw new NotImplementedException();
+            decimal res = 1;
+
+            if (_configurationReady)
+            {
+                string requestAddress = $"{_apiBaseAddress}/v3/coins/{id}";
+
+                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, requestAddress);
+
+                httpRequest.Headers.Add("x_cg_demo_api_key", _apiKey);
+
+                HttpResponseMessage httpResponce = await _httpClient.SendAsync(httpRequest);
+
+                string json = await httpResponce.Content.ReadAsStringAsync();
+
+                CoinGeckoCoinByIdApiResponce coinGeckoDeserializedResponce = JsonSerializer.Deserialize<CoinGeckoCoinByIdApiResponce>(json);
+
+                res = coinGeckoDeserializedResponce.market_data.current_price.usd;
+            }
+
+            return res;
         }
     }
 }
