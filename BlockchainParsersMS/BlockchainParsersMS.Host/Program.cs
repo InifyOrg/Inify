@@ -1,5 +1,6 @@
 using BlockchainParsersMS.Infrastructure;
 using BlockchainParsersMS.Infrastructure.Services;
+using TokensMs.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IWeb3Service, Web3Service>();
 builder.Services.AddScoped<IBlockchainParserService, BlockchainParserService>();
 builder.Services.AddScoped<ICoinGeckoService, CoinGeckoService>();
+builder.Services.AddScoped<ITokensMsClient, TokensMsClient>();
+
 
 var app = builder.Build();
 
