@@ -53,5 +53,28 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
             return res;
         }
+
+        public async Task<decimal> GetPriceByTokenAddress(string address, string platform)
+        {
+            decimal res = 1;
+
+            if (_configurationReady)
+            {
+                string requestAddress = $"{_apiBaseAddress}/v3/simple/token_price/{platform}?contract_addresses={address}&vs_currencies=usd";
+
+                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, requestAddress);
+
+                httpRequest.Headers.Add("x_cg_demo_api_key", _apiKey);
+
+                HttpResponseMessage httpResponce = await _httpClient.SendAsync(httpRequest);
+
+                string json = await httpResponce.Content.ReadAsStringAsync();
+
+                var response = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, decimal>>>(json);
+                res = response.Values.First().First().Value;
+            }
+
+            return res;
+        }
     }
 }

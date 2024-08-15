@@ -70,7 +70,9 @@ namespace BlockchainParsersMS.Infrastructure.Services
                         Chain = "ERC-20",
                         TokenAddress = tokens[i].Address,
                         Amount = Web3.Convert.FromWei(balance, tokens[i].Decimals),
+                        Price = await _coinGeckoService.GetPriceByTokenAddress(tokens[i].Address, tokens[i].Platform.Slug),
                     };
+                    balanceResult.UsdValue = balanceResult.Amount * balanceResult.Price;
 
                     currentBalances.Add(balanceResult);
                 }

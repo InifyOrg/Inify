@@ -27,8 +27,8 @@ namespace BlockchainParsersMS.Infrastructure.Services
         {
             List<ParsedTokenDTO> res = new List<ParsedTokenDTO>();
 
-            //ParsedTokenDTO parsedBaseToken = await _web3Service.parseBaseErcToken(walletInfo);
-            //res.Add(parsedBaseToken);
+            ParsedTokenDTO parsedBaseToken = await _web3Service.parseBaseErcToken(walletInfo);
+            res.Add(parsedBaseToken);
 
             List<TokenDTO> tokens = await _tokensMsClient.GetAllTokensByWalletType(walletInfo.Type);
 
