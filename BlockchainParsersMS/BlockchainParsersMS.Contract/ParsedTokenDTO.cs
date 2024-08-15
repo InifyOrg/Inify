@@ -12,10 +12,10 @@ namespace BlockchainParsersMS.Contract
         public string Symbol { get; set; }
         public string Platform { get; set; }
         public string Chain { get; set; }
-        public string? TokenAddress { get; set; }
+        public string TokenAddress { get; set; }
         public decimal Amount { get; set; }
         public decimal Price { get; set; }
         public decimal UsdValue { get; set; }
-        public WalletInfoDTO WalletInfo { get; set; }
+        public WalletMainInfoDTO Wallet { get; set; }
     }
 }

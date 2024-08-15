@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace BlockchainParsersMS.Contract
 {
-    public class WalletInfoDTO
+    public class WalletParsedInfoDTO
     {
         public string Address { get; set; }
         public string Type { get; set; }
-
+        public decimal Balance { get; set; }
+        public string BestTokenAmount { get; set; }
+        public string BestTokenSymbol { get; set; }
     }
 }

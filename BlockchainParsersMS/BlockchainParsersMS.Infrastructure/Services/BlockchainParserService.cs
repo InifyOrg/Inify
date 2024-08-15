@@ -23,7 +23,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
         }
 
 
-        public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletInfoDTO walletInfo)
+        public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletMainInfoDTO walletInfo)
         {
             List<ParsedTokenDTO> res = new List<ParsedTokenDTO>();
 
