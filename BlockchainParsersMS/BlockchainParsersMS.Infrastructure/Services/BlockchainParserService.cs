@@ -22,6 +22,33 @@ namespace BlockchainParsersMS.Infrastructure.Services
             _tokensMsClient = tokensMsClient;
         }
 
+        public decimal getTotalBalance(List<ParsedTokenDTO> parsedTokens)
+        {
+            decimal totalBalance = 0;
+            foreach (ParsedTokenDTO token in parsedTokens)
+            {
+                totalBalance += token.UsdValue;
+            }
+            return totalBalance;
+        }
+
+        public BestTokenDTO getTotalBestSymbol(List<ParsedTokenDTO> parsedTokens)
+        {
+            List<BestTokenDTO> bestTokens = new List<BestTokenDTO>();
+
+            foreach (ParsedTokenDTO token in parsedTokens)
+            {
+                if(bestTokens.FirstOrDefault(bt => bt.Symbol == token.Symbol) == null) 
+                    bestTokens.Add(new BestTokenDTO() { Symbol = token.Symbol, Amount = token.Amount });
+                else
+                {
+                    int index = bestTokens.FindIndex(bt => bt.Symbol == token.Symbol);
+                    bestTokens[index].Amount += token.Amount;
+                }
+            }
+
+            return bestTokens.OrderBy(bt => bt.Amount).First();
+        }
 
         public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletMainInfoDTO walletInfo)
         {

@@ -32,13 +32,16 @@ namespace BlockchainParsersMS.Host.Controllers
         {
             List<ParsedTokenDTO> parsedTokens = await _blockchainParserService.parseOneByAddress(walletInfo);
 
-            ParsingOutputDTO results = new ParsingOutputDTO() 
-            {
-                tokens = parsedTokens,
-            };
-
             if (parsedTokens.Count < 1)
                 return NotFound();
+
+            ParsingOutputDTO results = new ParsingOutputDTO() 
+            {
+                Tokens = parsedTokens,
+                TotalBalance = _blockchainParserService.getTotalBalance(parsedTokens),
+                TotalBestTokenSymbol = _blockchainParserService.getTotalBestSymbol(parsedTokens).Symbol,
+            };
+
             return Ok(results);
         }
     }
