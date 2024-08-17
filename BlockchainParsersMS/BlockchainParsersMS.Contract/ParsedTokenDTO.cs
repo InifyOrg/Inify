@@ -16,6 +16,5 @@ namespace BlockchainParsersMS.Contract
         public decimal Amount { get; set; }
         public decimal Price { get; set; }
         public decimal UsdValue { get; set; }
-        public WalletMainInfoDTO Wallet { get; set; }
     }
 }

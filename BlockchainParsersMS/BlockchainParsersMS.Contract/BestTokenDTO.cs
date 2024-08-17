@@ -10,5 +10,6 @@ namespace BlockchainParsersMS.Contract
     {
         public decimal Amount { get; set; }
         public string Symbol { get; set; }
+        public decimal UsdValue { get; set; }
     }
 }

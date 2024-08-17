@@ -39,18 +39,19 @@ namespace BlockchainParsersMS.Infrastructure.Services
             foreach (ParsedTokenDTO token in parsedTokens)
             {
                 if(bestTokens.FirstOrDefault(bt => bt.Symbol == token.Symbol) == null) 
-                    bestTokens.Add(new BestTokenDTO() { Symbol = token.Symbol, Amount = token.Amount });
+                    bestTokens.Add(new BestTokenDTO() { Symbol = token.Symbol, Amount = token.Amount, UsdValue = token.UsdValue });
                 else
                 {
                     int index = bestTokens.FindIndex(bt => bt.Symbol == token.Symbol);
                     bestTokens[index].Amount += token.Amount;
+                    bestTokens[index].UsdValue += token.UsdValue;
                 }
             }
 
-            return bestTokens.OrderBy(bt => bt.Amount).First();
+            return bestTokens.OrderByDescending(bt => bt.UsdValue).First();
         }
 
-        public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletMainInfoDTO walletInfo)
+        public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletDTO walletInfo)
         {
             List<ParsedTokenDTO> res = new List<ParsedTokenDTO>();
 

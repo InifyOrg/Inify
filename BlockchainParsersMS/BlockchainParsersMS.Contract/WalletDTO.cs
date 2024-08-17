@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlockchainParsersMS.Contract
 {
-    public class WalletMainInfoDTO
+    public class WalletDTO
     {
         public string Address { get; set; }
         public string Type { get; set; }

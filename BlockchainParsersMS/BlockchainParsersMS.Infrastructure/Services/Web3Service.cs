@@ -29,7 +29,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             _coinGeckoService = coinGeckoService;
         }
 
-        public async Task<ParsedTokenDTO> parseBaseErcToken(WalletMainInfoDTO walletInfo)
+        public async Task<ParsedTokenDTO> parseBaseErcToken(WalletDTO walletInfo)
         {
             ParsedTokenDTO result = new ParsedTokenDTO
             {
@@ -38,7 +38,6 @@ namespace BlockchainParsersMS.Infrastructure.Services
                 Name = "Ethereum",
                 Symbol = "ETH",
                 Chain = "ERC-20",
-                Wallet = walletInfo
             };
             result.Price = await _coinGeckoService.GetPriceByCoinId(result.Name.ToLower());
             result.UsdValue = result.Amount * result.Price;

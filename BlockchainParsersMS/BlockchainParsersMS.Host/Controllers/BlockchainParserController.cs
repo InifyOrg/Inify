@@ -28,19 +28,29 @@ namespace BlockchainParsersMS.Host.Controllers
         }
 
         [HttpGet("parseOneByAddress")]
-        public async Task<IActionResult> parseOneByAddress([FromQuery] WalletMainInfoDTO walletInfo)
+        public async Task<IActionResult> parseOneByAddress([FromQuery] WalletDTO walletInfo)
         {
             List<ParsedTokenDTO> parsedTokens = await _blockchainParserService.parseOneByAddress(walletInfo);
 
             if (parsedTokens.Count < 1)
                 return NotFound();
 
-            ParsingOutputDTO results = new ParsingOutputDTO() 
+            ParsingOutputDTO results = new ParsingOutputDTO()
             {
-                Tokens = parsedTokens,
                 TotalBalance = _blockchainParserService.getTotalBalance(parsedTokens),
                 TotalBestTokenSymbol = _blockchainParserService.getTotalBestSymbol(parsedTokens).Symbol,
             };
+
+            results.Wallets = new List<WalletParsedInfoDTO>()
+            {
+                new WalletParsedInfoDTO() {
+                    Wallet = walletInfo,
+                    Balance = results.TotalBalance, 
+                    Tokens = parsedTokens,
+                }
+            };
+
+            results.Wallets[0].BestToken = _blockchainParserService.getTotalBestSymbol(parsedTokens);
 
             return Ok(results);
         }

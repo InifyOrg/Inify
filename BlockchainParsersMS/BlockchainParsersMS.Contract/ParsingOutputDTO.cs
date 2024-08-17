@@ -11,9 +11,6 @@ namespace BlockchainParsersMS.Contract
         public string TotalBestTokenSymbol { get; set; }
         public decimal TotalBalance { get; set; }
 
-        public List<WalletParsedInfoDTO> walletInfos { get; set; }
-
-        public List<ParsedTokenDTO> Tokens { get; set; }
-
+        public List<WalletParsedInfoDTO> Wallets { get; set; }
     }
 }

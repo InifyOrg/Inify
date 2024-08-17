@@ -8,9 +8,9 @@ namespace BlockchainParsersMS.Contract
 {
     public class WalletParsedInfoDTO
     {
-        public string Address { get; set; }
-        public string Type { get; set; }
+        public WalletDTO Wallet { get; set; }
         public decimal Balance { get; set; }
         public BestTokenDTO BestToken { get; set; }
+        public List<ParsedTokenDTO> Tokens { get; set; }
     }
 }
