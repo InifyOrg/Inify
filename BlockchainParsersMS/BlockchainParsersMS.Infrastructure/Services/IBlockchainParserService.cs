@@ -6,6 +6,7 @@ namespace BlockchainParsersMS.Infrastructure
     {
         decimal getTotalBalance(List<ParsedTokenDTO> parsedTokens);
         BestTokenDTO getTotalBestSymbol(List<ParsedTokenDTO> parsedTokens);
+        Task<ParsingOutputDTO> parseManyByUserId(long userId);
         Task<List<ParsedTokenDTO>> parseOneByAddress(WalletDTO walletInfo);
     }
 }

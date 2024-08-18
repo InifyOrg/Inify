@@ -17,14 +17,17 @@ namespace BlockchainParsersMS.Host.Controllers
         }
 
         [HttpGet("parseManyByUserId/{userId}")]
-        public async Task<IActionResult> parseManyByUserId(int userId)
+        public async Task<IActionResult> parseManyByUserId(long userId)
         {
             // ToDo:
             //1. получить кошельки этого пользователя (в том микросервисе есть уже проверка на наличие пользователя)
             //2. получить базовый токен на каждом кошельке
             //3. получить список токенов для парсинга
             //4. получить количество денег в каждом токене для каждого кошелька
-            throw new NotImplementedException();
+            ParsingOutputDTO results = await _blockchainParserService.parseManyByUserId(userId);
+            if(results.Wallets.Count < 1) 
+                return NotFound();
+            return Ok(results);
         }
 
         [HttpGet("parseOneByAddress")]

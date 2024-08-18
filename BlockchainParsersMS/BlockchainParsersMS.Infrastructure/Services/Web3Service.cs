@@ -44,7 +44,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             return result;
         }
 
-        public async Task<List<ParsedTokenDTO>> parseBalancesWithMulticall(List<string> addresses, List<TokenDTO> tokens)
+        public async Task<List<ParsedTokenDTO>> parseBalancesWithMulticall(string address, List<TokenDTO> tokens)
         {
             List<IMulticallInputOutput> callList = new List<IMulticallInputOutput>();
 

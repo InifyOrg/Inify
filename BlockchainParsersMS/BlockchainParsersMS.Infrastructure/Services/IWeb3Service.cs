@@ -5,7 +5,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
 {
     public interface IWeb3Service
     {
-        Task<List<ParsedTokenDTO>> parseBalancesWithMulticall(List<string> addresses, List<TokenDTO> tokens);
+        Task<List<ParsedTokenDTO>> parseBalancesWithMulticall(string address, List<TokenDTO> tokens);
         Task<ParsedTokenDTO> parseBaseErcToken(WalletDTO walletInfo);
 
     }
