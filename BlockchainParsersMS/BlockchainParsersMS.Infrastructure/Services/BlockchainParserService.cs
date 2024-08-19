@@ -62,7 +62,13 @@ namespace BlockchainParsersMS.Infrastructure.Services
                 Wallets = new List<WalletParsedInfoDTO>() 
             };
 
-            List<WalletDTO> wallets = (await _walletsMsClient.GetAllWalletsByUserId(userId)).Adapt<List<WalletDTO>>();
+            List<WalletDTO> wallets = new List<WalletDTO>()
+            {
+                new WalletDTO() {Address = "0x53d0142b8ba3fccde0ae7ec1d9aff3789b21d03e", Type = "EVM"},
+                new WalletDTO() {Address = "0xee9ca24fb62bfc021e1a46e09e1c1cbecd3341b5", Type = "EVM"},
+                new WalletDTO() {Address = "0xf095731c807a08009099b0a3eba61fa2cf09b10b", Type = "EVM"},
+                new WalletDTO() {Address = "0xe4336223707c1616278a44ecd9f4546ea422f8e7", Type = "EVM"},
+            };//(await _walletsMsClient.GetAllWalletsByUserId(userId)).Adapt<List<WalletDTO>>();
             List<ParsedTokenDTO> tokensForStatistics = new List<ParsedTokenDTO>();
 
             IEnumerable<Task> tasks = wallets.Select(async wallet => {

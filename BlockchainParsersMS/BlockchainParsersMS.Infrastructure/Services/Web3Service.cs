@@ -50,7 +50,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
             foreach (var token in tokens)
             {
-                BalanceOfFunction balanceOf = new BalanceOfFunction() { Owner = addresses[0] };
+                BalanceOfFunction balanceOf = new BalanceOfFunction() { Owner = address };
                 var call = new MulticallInputOutput<BalanceOfFunction, BalanceOfOutputDTO>(balanceOf, token.Address);
                 callList.Add(call);
             }
@@ -72,7 +72,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
                         Chain = "ERC-20",
                         TokenAddress = tokens[i].Address,
                         Amount = Web3.Convert.FromWei(balance, tokens[i].Decimals),
-                        Price = await _coinGeckoService.GetPriceByTokenAddress(tokens[i].Address, tokens[i].Platform.Slug),
+                        Price = 1,//await _coinGeckoService.GetPriceByTokenAddress(tokens[i].Address, tokens[i].Platform.Slug),
                     };
                     balanceResult.UsdValue = balanceResult.Amount * balanceResult.Price;
 
