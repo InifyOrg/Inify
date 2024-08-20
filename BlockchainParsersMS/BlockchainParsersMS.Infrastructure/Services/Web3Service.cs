@@ -17,8 +17,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
     public class Web3Service : IWeb3Service
     {
         private readonly Web3 _web3;
-        private readonly ICoinGeckoService _coinGeckoService;
-        public Web3Service(ICoinGeckoService coinGeckoService)
+        public Web3Service()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
@@ -26,7 +25,6 @@ namespace BlockchainParsersMS.Infrastructure.Services
                 .Build();
 
             _web3 = new Web3(configuration.GetSection("APIs:InfuraEthNode").Value);
-            _coinGeckoService = coinGeckoService;
         }
 
         public async Task<ParsedTokenDTO> parseBaseErcToken(WalletDTO walletInfo)
@@ -35,12 +33,11 @@ namespace BlockchainParsersMS.Infrastructure.Services
             {
                 Amount = Web3.Convert.FromWei(await _web3.Eth.GetBalance.SendRequestAsync(walletInfo.Address)),
                 Platform = "ethereum",
+                Slug = "ethereum",
                 Name = "Ethereum",
                 Symbol = "ETH",
                 Chain = "ERC-20",
             };
-            result.Price = await _coinGeckoService.GetPriceByCoinId(result.Name.ToLower());
-            result.UsdValue = result.Amount * result.Price;
             return result;
         }
 
@@ -69,12 +66,11 @@ namespace BlockchainParsersMS.Infrastructure.Services
                         Name = tokens[i].Name,
                         Symbol = tokens[i].Symbol,
                         Platform = tokens[i].Platform.Slug,
+                        Slug = tokens[i].Slug,
                         Chain = "ERC-20",
                         TokenAddress = tokens[i].Address,
                         Amount = Web3.Convert.FromWei(balance, tokens[i].Decimals),
-                        Price = 1,//await _coinGeckoService.GetPriceByTokenAddress(tokens[i].Address, tokens[i].Platform.Slug),
                     };
-                    balanceResult.UsdValue = balanceResult.Amount * balanceResult.Price;
 
                     currentBalances.Add(balanceResult);
                 }

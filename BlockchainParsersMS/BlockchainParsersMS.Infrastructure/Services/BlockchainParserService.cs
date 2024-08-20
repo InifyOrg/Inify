@@ -18,12 +18,13 @@ namespace BlockchainParsersMS.Infrastructure.Services
         private readonly IWeb3Service _web3Service;
         private readonly ITokensMsClient _tokensMsClient;
         private readonly IWalletsMsClient _walletsMsClient; 
-
-        public BlockchainParserService(IWeb3Service web3Service, ITokensMsClient tokensMsClient, IWalletsMsClient walletsMsClient)
+        private readonly ICoinMarketCapService _coinMarketCapService;
+        public BlockchainParserService(IWeb3Service web3Service, ITokensMsClient tokensMsClient, IWalletsMsClient walletsMsClient, ICoinMarketCapService coinMarketCapService)
         {
             _web3Service = web3Service;
             _tokensMsClient = tokensMsClient;
             _walletsMsClient = walletsMsClient;
+            _coinMarketCapService = coinMarketCapService;
         }
 
         public decimal getTotalBalance(List<ParsedTokenDTO> parsedTokens)
@@ -62,13 +63,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
                 Wallets = new List<WalletParsedInfoDTO>() 
             };
 
-            List<WalletDTO> wallets = new List<WalletDTO>()
-            {
-                new WalletDTO() {Address = "0x53d0142b8ba3fccde0ae7ec1d9aff3789b21d03e", Type = "EVM"},
-                new WalletDTO() {Address = "0xee9ca24fb62bfc021e1a46e09e1c1cbecd3341b5", Type = "EVM"},
-                new WalletDTO() {Address = "0xf095731c807a08009099b0a3eba61fa2cf09b10b", Type = "EVM"},
-                new WalletDTO() {Address = "0xe4336223707c1616278a44ecd9f4546ea422f8e7", Type = "EVM"},
-            };//(await _walletsMsClient.GetAllWalletsByUserId(userId)).Adapt<List<WalletDTO>>();
+            List<WalletDTO> wallets = (await _walletsMsClient.GetAllWalletsByUserId(userId)).Adapt<List<WalletDTO>>();
             List<ParsedTokenDTO> tokensForStatistics = new List<ParsedTokenDTO>();
 
             IEnumerable<Task> tasks = wallets.Select(async wallet => {
@@ -94,16 +89,19 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
         public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletDTO walletInfo)
         {
-            List<ParsedTokenDTO> res = new List<ParsedTokenDTO>();
+            List<ParsedTokenDTO> parsedTokensWithoutPrice = new List<ParsedTokenDTO>();
 
             ParsedTokenDTO parsedBaseToken = await _web3Service.parseBaseErcToken(walletInfo);
-            res.Add(parsedBaseToken);
+            parsedTokensWithoutPrice.Add(parsedBaseToken);
 
             List<TokenDTO> tokens = await _tokensMsClient.GetAllTokensByWalletType(walletInfo.Type);
 
-            res.AddRange(await _web3Service.parseBalancesWithMulticall(walletInfo.Address, tokens));
+            parsedTokensWithoutPrice.AddRange(await _web3Service.parseBalancesWithMulticall(walletInfo.Address, tokens));
 
-            return res;
+
+            List<ParsedTokenDTO> parsedTokensWithPrice = await _coinMarketCapService.parsePricesOfParsedTokens(parsedTokensWithoutPrice);
+
+            return parsedTokensWithPrice;
         }
 
 

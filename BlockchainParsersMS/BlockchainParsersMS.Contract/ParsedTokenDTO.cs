@@ -10,6 +10,7 @@ namespace BlockchainParsersMS.Contract
     {
         public string Name { get; set; }
         public string Symbol { get; set; }
+        public string Slug { get; set; }
         public string Platform { get; set; }
         public string Chain { get; set; }
         public string TokenAddress { get; set; }
