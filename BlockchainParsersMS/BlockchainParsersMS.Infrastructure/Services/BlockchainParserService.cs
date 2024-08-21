@@ -98,7 +98,6 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
             parsedTokensWithoutPrice.AddRange(await _web3Service.parseBalancesWithMulticall(walletInfo.Address, tokens));
 
-
             List<ParsedTokenDTO> parsedTokensWithPrice = await _coinMarketCapService.parsePricesOfParsedTokens(parsedTokensWithoutPrice);
 
             return parsedTokensWithPrice;

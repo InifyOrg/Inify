@@ -1,0 +1,12 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_component",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "ParsersServiceAddress": "http://localhost:5074",
+  "ParsersServiceApiBase": "api/BlockchainParser"
+}
