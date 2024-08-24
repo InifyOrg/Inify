@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BlockchainParsersMS.Client" Version="1.0.0" />
+    <PackageReference Include="BlockchainParsersMS.Contract" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="TokensMs.Client" Version="1.0.1" />
+    <PackageReference Include="TokensMS.Contract" Version="1.0.0" />
+    <PackageReference Include="UsersMS.Client" Version="1.0.4" />
+    <PackageReference Include="UsersMS.Contracts" Version="1.0.2" />
+    <PackageReference Include="WalletsMS.Client" Version="1.0.1" />
+    <PackageReference Include="WalletsMS.Contract" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>
