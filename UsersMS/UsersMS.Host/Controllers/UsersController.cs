@@ -76,13 +76,6 @@ namespace UsersMS.Host.Controllers
                 return BadRequest("Wrong input data");
             return Ok(accessToken);
         }
-        
-        // POST api/<UsersController>
-        [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
-        {
-            throw new NotImplementedException();
-        }
 
         // PUT api/<UsersController>
         [HttpPut("editUser")]

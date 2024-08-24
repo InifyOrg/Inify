@@ -9,6 +9,6 @@ namespace BlockchainParsersMS.Infrastructure.Services
 {
     public interface ICoinMarketCapService
     {
-        Task<List<ParsedTokenDTO>> parsePricesOfParsedTokens(List<ParsedTokenDTO> parsedTokensWithoutPrice);
+        Task<List<ParsedTokenDTO>> ParsePricesOfParsedTokens(List<ParsedTokenDTO> parsedTokensWithoutPrice);
     }
 }

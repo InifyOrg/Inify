@@ -27,7 +27,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             _coinMarketCapService = coinMarketCapService;
         }
 
-        public decimal getTotalBalance(List<ParsedTokenDTO> parsedTokens)
+        public decimal GetTotalBalance(List<ParsedTokenDTO> parsedTokens)
         {
             decimal totalBalance = 0;
             foreach (ParsedTokenDTO token in parsedTokens)
@@ -37,7 +37,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             return totalBalance;
         }
 
-        public BestTokenDTO getTotalBestSymbol(List<ParsedTokenDTO> parsedTokens)
+        public BestTokenDTO GetTotalBestSymbol(List<ParsedTokenDTO> parsedTokens)
         {
             List<BestTokenDTO> bestTokens = new List<BestTokenDTO>();
 
@@ -56,7 +56,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             return bestTokens.OrderByDescending(bt => bt.UsdValue).First();
         }
 
-        public async Task<ParsingOutputDTO> parseManyByUserId(long userId)
+        public async Task<ParsingOutputDTO> ParseManyByUserId(long userId)
         {
             ParsingOutputDTO output = new ParsingOutputDTO() 
             { 
@@ -70,35 +70,35 @@ namespace BlockchainParsersMS.Infrastructure.Services
                 WalletParsedInfoDTO walletParsed = new WalletParsedInfoDTO
                 {
                     Wallet = wallet,
-                    Tokens = await parseOneByAddress(wallet),
+                    Tokens = await ParseOneByAddress(wallet),
                 };
 
-                walletParsed.BestToken = getTotalBestSymbol(walletParsed.Tokens);
-                walletParsed.Balance = getTotalBalance(walletParsed.Tokens);
+                walletParsed.BestToken = GetTotalBestSymbol(walletParsed.Tokens);
+                walletParsed.Balance = GetTotalBalance(walletParsed.Tokens);
 
                 output.Wallets.Add(walletParsed);
                 tokensForStatistics.AddRange(walletParsed.Tokens);
             });
             await Task.WhenAll(tasks);
 
-            output.TotalBalance = getTotalBalance(tokensForStatistics);
-            output.TotalBestTokenSymbol = getTotalBestSymbol(tokensForStatistics).Symbol;
+            output.TotalBalance = GetTotalBalance(tokensForStatistics);
+            output.TotalBestTokenSymbol = GetTotalBestSymbol(tokensForStatistics).Symbol;
 
             return output;
         }
 
-        public async Task<List<ParsedTokenDTO>> parseOneByAddress(WalletDTO walletInfo)
+        public async Task<List<ParsedTokenDTO>> ParseOneByAddress(WalletDTO walletInfo)
         {
             List<ParsedTokenDTO> parsedTokensWithoutPrice = new List<ParsedTokenDTO>();
 
-            ParsedTokenDTO parsedBaseToken = await _web3Service.parseBaseErcToken(walletInfo);
+            ParsedTokenDTO parsedBaseToken = await _web3Service.ParseBaseErcToken(walletInfo);
             parsedTokensWithoutPrice.Add(parsedBaseToken);
 
             List<TokenDTO> tokens = await _tokensMsClient.GetAllTokensByWalletType(walletInfo.Type);
 
-            parsedTokensWithoutPrice.AddRange(await _web3Service.parseBalancesWithMulticall(walletInfo.Address, tokens));
+            parsedTokensWithoutPrice.AddRange(await _web3Service.ParseBalancesWithMulticall(walletInfo.Address, tokens));
 
-            List<ParsedTokenDTO> parsedTokensWithPrice = await _coinMarketCapService.parsePricesOfParsedTokens(parsedTokensWithoutPrice);
+            List<ParsedTokenDTO> parsedTokensWithPrice = await _coinMarketCapService.ParsePricesOfParsedTokens(parsedTokensWithoutPrice);
 
             return parsedTokensWithPrice;
         }

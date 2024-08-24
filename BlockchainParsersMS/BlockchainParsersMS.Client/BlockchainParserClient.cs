@@ -41,7 +41,6 @@ namespace BlockchainParsersMS.Client
                 string jsonToken = await tokensMsResponce.Content.ReadAsStringAsync();
 
                 output = JsonSerializer.Deserialize<ParsingOutputDTO>(jsonToken);
-                return output;
             }
 
             return output;
@@ -60,7 +59,6 @@ namespace BlockchainParsersMS.Client
                 string jsonToken = await tokensMsResponce.Content.ReadAsStringAsync();
 
                 output = JsonSerializer.Deserialize<ParsingOutputDTO>(jsonToken);
-                return output;
             }
 
             return output;

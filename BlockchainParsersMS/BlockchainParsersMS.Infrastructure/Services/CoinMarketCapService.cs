@@ -29,7 +29,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
         }
 
-        public async Task<List<ParsedTokenDTO>> parsePricesOfParsedTokens(List<ParsedTokenDTO> parsedTokensWithoutPrice)
+        public async Task<List<ParsedTokenDTO>> ParsePricesOfParsedTokens(List<ParsedTokenDTO> parsedTokensWithoutPrice)
         {
             string slugs = "";
 

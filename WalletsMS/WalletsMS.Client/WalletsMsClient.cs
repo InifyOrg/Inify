@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace WalletsMS.Client
         public WalletsMsClient()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddJsonFile("clientsettings.json")
+                .AddJsonFile("walletsclientsettings.json")
                 .Build();
 
             _serviceAddress = configuration.GetSection("WalletsServiceAddress").Value;
@@ -28,14 +29,42 @@ namespace WalletsMS.Client
             _httpClient = new HttpClient();
         }
 
-        public Task<WalletDTO> AddNewWalletFromDTO(AddWalletDTO addWalletFromDTO)
+        public async Task<WalletDTO> AddNewWalletFromDTO(AddWalletDTO addWalletFromDTO)
         {
-            throw new NotImplementedException();
+            WalletDTO wallet = new WalletDTO();
+
+            if (_configurationReady)
+            {
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/addNewWallet";
+                HttpContent postContetnt = JsonContent.Create(addWalletFromDTO);
+
+                HttpResponseMessage walletsMsResponce = await _httpClient.PostAsync(requestAddress, postContetnt);
+
+                string jsonWallet = await walletsMsResponce.Content.ReadAsStringAsync();
+
+                wallet = JsonSerializer.Deserialize<WalletDTO>(jsonWallet);
+            }
+
+            return wallet;
         }
 
-        public Task<bool> DeleteWalletById(long id)
+        public async Task<bool> DeleteWalletById(long id)
         {
-            throw new NotImplementedException();
+            bool isDeleted = false;
+
+            if (_configurationReady)
+            {
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/addNewWallet";
+                HttpContent postContetnt = JsonContent.Create(id);
+
+                HttpResponseMessage walletsMsResponce = await _httpClient.PostAsync(requestAddress, postContetnt);
+
+                string jsonWallet = await walletsMsResponce.Content.ReadAsStringAsync();
+
+                isDeleted = bool.Parse(jsonWallet);
+            }
+
+            return isDeleted;
         }
 
         public async Task<List<WalletDTO>> GetAllWalletsByUserId(long userId)
@@ -51,7 +80,6 @@ namespace WalletsMS.Client
                 string jsonWallet = await walletsMsResponce.Content.ReadAsStringAsync();
 
                 wallets = JsonSerializer.Deserialize<List<WalletDTO>>(jsonWallet);
-                return wallets;
             }
 
             return wallets;

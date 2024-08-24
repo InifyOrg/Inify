@@ -27,7 +27,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             _web3 = new Web3(configuration.GetSection("APIs:InfuraEthNode").Value);
         }
 
-        public async Task<ParsedTokenDTO> parseBaseErcToken(WalletDTO walletInfo)
+        public async Task<ParsedTokenDTO> ParseBaseErcToken(WalletDTO walletInfo)
         {
             ParsedTokenDTO result = new ParsedTokenDTO
             {
@@ -41,7 +41,7 @@ namespace BlockchainParsersMS.Infrastructure.Services
             return result;
         }
 
-        public async Task<List<ParsedTokenDTO>> parseBalancesWithMulticall(string address, List<TokenDTO> tokens)
+        public async Task<List<ParsedTokenDTO>> ParseBalancesWithMulticall(string address, List<TokenDTO> tokens)
         {
             List<IMulticallInputOutput> callList = new List<IMulticallInputOutput>();
 

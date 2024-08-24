@@ -17,26 +17,26 @@ namespace BlockchainParsersMS.Host.Controllers
         }
 
         [HttpGet("parseManyByUserId/{userId}")]
-        public async Task<IActionResult> parseManyByUserId(long userId)
+        public async Task<IActionResult> ParseManyByUserId(long userId)
         {
-            ParsingOutputDTO results = await _blockchainParserService.parseManyByUserId(userId);
+            ParsingOutputDTO results = await _blockchainParserService.ParseManyByUserId(userId);
             if(results.Wallets.Count < 1) 
                 return NotFound();
             return Ok(results);
         }
 
         [HttpGet("parseOneByAddress")]
-        public async Task<IActionResult> parseOneByAddress([FromQuery] WalletDTO walletInfo)
+        public async Task<IActionResult> ParseOneByAddress([FromQuery] WalletDTO walletInfo)
         {
-            List<ParsedTokenDTO> parsedTokens = await _blockchainParserService.parseOneByAddress(walletInfo);
+            List<ParsedTokenDTO> parsedTokens = await _blockchainParserService.ParseOneByAddress(walletInfo);
 
             if (parsedTokens.Count < 1)
                 return NotFound();
 
             ParsingOutputDTO results = new ParsingOutputDTO()
             {
-                TotalBalance = _blockchainParserService.getTotalBalance(parsedTokens),
-                TotalBestTokenSymbol = _blockchainParserService.getTotalBestSymbol(parsedTokens).Symbol,
+                TotalBalance = _blockchainParserService.GetTotalBalance(parsedTokens),
+                TotalBestTokenSymbol = _blockchainParserService.GetTotalBestSymbol(parsedTokens).Symbol,
             };
 
             results.Wallets = new List<WalletParsedInfoDTO>()
@@ -48,7 +48,7 @@ namespace BlockchainParsersMS.Host.Controllers
                 }
             };
 
-            results.Wallets[0].BestToken = _blockchainParserService.getTotalBestSymbol(parsedTokens);
+            results.Wallets[0].BestToken = _blockchainParserService.GetTotalBestSymbol(parsedTokens);
 
             return Ok(results);
         }

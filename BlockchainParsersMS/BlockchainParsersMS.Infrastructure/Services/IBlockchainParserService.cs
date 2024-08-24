@@ -4,9 +4,9 @@ namespace BlockchainParsersMS.Infrastructure
 {
     public interface IBlockchainParserService
     {
-        decimal getTotalBalance(List<ParsedTokenDTO> parsedTokens);
-        BestTokenDTO getTotalBestSymbol(List<ParsedTokenDTO> parsedTokens);
-        Task<ParsingOutputDTO> parseManyByUserId(long userId);
-        Task<List<ParsedTokenDTO>> parseOneByAddress(WalletDTO walletInfo);
+        decimal GetTotalBalance(List<ParsedTokenDTO> parsedTokens);
+        BestTokenDTO GetTotalBestSymbol(List<ParsedTokenDTO> parsedTokens);
+        Task<ParsingOutputDTO> ParseManyByUserId(long userId);
+        Task<List<ParsedTokenDTO>> ParseOneByAddress(WalletDTO walletInfo);
     }
 }

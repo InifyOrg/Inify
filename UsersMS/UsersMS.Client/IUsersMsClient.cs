@@ -10,7 +10,9 @@ namespace UsersMS.Client
     public interface IUsersMsClient
     {
         public Task<UserDTO> GetUserByID(long id);
-        public Task<UserDTO> CreateUser(AddUserDTO userToAdd);
+        public Task<UserDTO> GetUserByEmail(string email);
+        public Task<UserDTO> Register(AddUserDTO userToAdd);
+        public Task<string> Login(LoginDTO loginDTO);
         public Task<bool> EditUser(EditUserDTO userToAdd);
         public Task<bool> EditUserPassword(EditUserPasswordDTO userToAdd);
         public Task<bool> ValidateAccessToken(string accessToken);

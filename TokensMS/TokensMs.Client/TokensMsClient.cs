@@ -14,7 +14,7 @@ namespace TokensMs.Client
         public TokensMsClient()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddJsonFile("clientsettings.json")
+                .AddJsonFile("tokensclientsettings.json")
                 .Build();
 
             _serviceAddress = configuration.GetSection("TokensServiceAddress").Value;
@@ -36,7 +36,6 @@ namespace TokensMs.Client
                 string jsonToken = await tokensMsResponce.Content.ReadAsStringAsync();
 
                 tokens = JsonSerializer.Deserialize<List<TokenDTO>>(jsonToken);
-                return tokens;
             }
 
             return tokens;
@@ -55,7 +54,6 @@ namespace TokensMs.Client
                 string jsonToken = await tokensMsResponce.Content.ReadAsStringAsync();
 
                 tokens = JsonSerializer.Deserialize<List<TokenDTO>>(jsonToken);
-                return tokens;
             }
 
             return tokens;
