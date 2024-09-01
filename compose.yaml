@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    environment:
+      MSSQL_SA_PASSWORD: myPassw0rd2o19
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
+    networks:
+      inifynetwork:
+        ipv4_address: 172.18.0.2
+
+  usersms:
+    image: usersmshost:latest
+    build: ./UsersMS/UsersMS.Host
+    container_name: usersms
+    ports:
+      - 5107:80
+    networks:
+      inifynetwork:
+        ipv4_address: 172.18.0.5
+
+networks:
+  inifynetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
