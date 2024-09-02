@@ -1,5 +1,4 @@
 ﻿using BlockchainParsersMS.Contract;
-using BlockchainParsersMS.Infrastructure.Web3DTOs;
 using Microsoft.Extensions.Configuration;
 using Nethereum.Contracts;
 using Nethereum.Contracts.Standards.ERC20.ContractDefinition;

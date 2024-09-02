@@ -23,6 +23,46 @@ services:
       inifynetwork:
         ipv4_address: 172.18.0.5
 
+  walletsms:
+    image: walletsmshost:latest
+    build: ./WalletsMS/WalletsMS.Host
+    container_name: walletsms
+    ports:
+      - 5065:80
+    networks:
+      inifynetwork:
+        ipv4_address: 172.18.0.6
+
+  tokensms:
+    image: tokensmshost:latest
+    build: ./TokensMS/TokensMS.Host
+    container_name: tokensms
+    ports:
+      - 5181:80
+    networks:
+      inifynetwork:
+        ipv4_address: 172.18.0.7
+
+  blockchainparsersms:
+    image: blockchainparsersmshost:latest
+    build: ./BlockchainParsersMS/BlockchainParsersMS.Host
+    container_name: blockchainparsersms
+    ports:
+      - 5074:80
+    networks:
+      inifynetwork:
+        ipv4_address: 172.18.0.8
+
+  apigateway:
+    image: apigatewayhost:latest
+    build: ./ApiGateway/ApiGateway.Host
+    container_name: apigateway
+    ports:
+      - 5082:80
+    networks:
+      inifynetwork:
+        ipv4_address: 172.18.0.9
+
 networks:
   inifynetwork:
     ipam:
