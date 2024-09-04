@@ -1,6 +1,8 @@
 using UsersMS.Infrastructure.DataLayer;
 using UsersMS.Infrastructure.Services;
 using UsersMS.Infrastructure;
+using UsersMS.Infrastructure.Domain.DbCtx;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,23 @@ builder.Services.AddTransient<IUsersDataLayer, UsersDataLayer>();
 builder.Services.AddScoped<IAccessTokenService, AccessTokenService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 
+builder.Services.AddDbContext<UserMsDbContext>();
+
 var app = builder.Build();
+
+// Apply migrations
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var context = services.GetRequiredService<UserMsDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex) { throw; }
+}
 
 // Configure the HTTP request pipeline.
 
@@ -34,3 +52,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
