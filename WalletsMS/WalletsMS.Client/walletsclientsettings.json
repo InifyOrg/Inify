@@ -7,6 +7,6 @@
     "**/obj",
     "**/platforms"
   ],
-  "WalletsServiceAddress": "http://localhost:5065",
+  "WalletsServiceAddress": "http://172.18.0.1:5065",
   "WalletsServiceApiBase": "api/Wallets"
 }

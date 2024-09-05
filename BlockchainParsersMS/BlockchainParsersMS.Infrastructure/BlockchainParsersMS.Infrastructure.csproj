@@ -13,9 +13,9 @@
     <PackageReference Include="Nethereum.Hex" Version="4.21.2" />
     <PackageReference Include="Nethereum.JsonRpc.RpcClient" Version="4.21.2" />
     <PackageReference Include="Nethereum.Web3" Version="4.21.2" />
-    <PackageReference Include="TokensMs.Client" Version="1.0.0" />
+    <PackageReference Include="TokensMs.Client" Version="1.0.1" />
     <PackageReference Include="TokensMS.Contract" Version="1.0.0" />
-    <PackageReference Include="WalletsMS.Client" Version="1.0.0" />
+    <PackageReference Include="WalletsMS.Client" Version="1.0.1" />
     <PackageReference Include="WalletsMS.Contract" Version="1.0.0" />
   </ItemGroup>
 

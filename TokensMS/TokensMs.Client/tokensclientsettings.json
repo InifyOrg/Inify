@@ -7,6 +7,6 @@
     "**/obj",
     "**/platforms"
   ],
-  "TokensServiceAddress": "http://localhost:5181",
+  "TokensServiceAddress": "http://172.18.0.1:5181",
   "TokensServiceApiBase": "api/Tokens"
 }

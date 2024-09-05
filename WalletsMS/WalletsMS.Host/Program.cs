@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using UsersMS.Client;
 using WalletsMS.Infrastructure;
 using WalletsMS.Infrastructure.DataLayer;
+using WalletsMS.Infrastructure.Domain.DbCtx;
 using WalletsMS.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +24,22 @@ builder.Services.AddScoped<IWalletsService, WalletsService>();
 
 builder.Services.AddSingleton<IUsersMsClient, UsersMsClient>();
 
+builder.Services.AddDbContext<WalletsMsDbContext>();
+
 var app = builder.Build();
+
+// Apply migrations
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var context = services.GetRequiredService<WalletsMsDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex) { throw; }
+}
 
 // Configure the HTTP request pipeline.
 

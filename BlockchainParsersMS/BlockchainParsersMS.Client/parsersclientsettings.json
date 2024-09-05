@@ -7,6 +7,6 @@
     "**/obj",
     "**/platforms"
   ],
-  "ParsersServiceAddress": "http://localhost:5074",
+  "ParsersServiceAddress": "http://172.18.0.1:5074",
   "ParsersServiceApiBase": "api/BlockchainParser"
 }

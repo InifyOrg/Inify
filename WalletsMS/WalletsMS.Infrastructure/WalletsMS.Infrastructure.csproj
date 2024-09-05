@@ -21,7 +21,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-    <PackageReference Include="UsersMS.Client" Version="1.0.3" />
+    <PackageReference Include="UsersMS.Client" Version="1.0.4" />
     <PackageReference Include="UsersMS.Contracts" Version="1.0.2" />
   </ItemGroup>
 
