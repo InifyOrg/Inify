@@ -2,6 +2,7 @@
 using Mapster;
 using Microsoft.Extensions.Configuration;
 using Nethereum.Web3;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,8 +61,10 @@ namespace BlockchainParsersMS.Infrastructure.Services
         {
             ParsingOutputDTO output = new ParsingOutputDTO() 
             { 
-                Wallets = new List<WalletParsedInfoDTO>() 
+                Wallets = new List<WalletParsedInfoDTO>()
             };
+
+            TypeAdapterConfig<WalletsMS.Contract.WalletDTO, WalletDTO>.NewConfig().Map(dest => dest.Type, src => src.WalletType.Title);
 
             List<WalletDTO> wallets = (await _walletsMsClient.GetAllWalletsByUserId(userId)).Adapt<List<WalletDTO>>();
             List<ParsedTokenDTO> tokensForStatistics = new List<ParsedTokenDTO>();
