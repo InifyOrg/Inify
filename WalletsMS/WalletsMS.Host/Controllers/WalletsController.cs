@@ -16,7 +16,7 @@ namespace WalletsMS.Host.Controllers
             _walletsService = walletsService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("getAllWalletsByUserId/{userId}")]
         public async Task<IActionResult> GetAllWalletsByUserId(long userId)
         {
             List<WalletDTO> walletByUserId = await _walletsService.GetAllWalletsByUserId(userId);

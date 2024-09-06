@@ -16,7 +16,7 @@ namespace ApiGateway.Host.Controllers
             _walletsMsClient = walletsMsClient;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("getAllWalletsByUserId/{userId}")]
         public async Task<IActionResult> GetAllWalletsByUserId(long userId)
         {
             List<WalletDTO> walletByUserId = await _walletsMsClient.GetAllWalletsByUserId(userId);

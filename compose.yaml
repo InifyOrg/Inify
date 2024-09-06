@@ -74,6 +74,7 @@ services:
       - ./UsersMS/UsersMS.Client/usersclientsettings.json:/app/usersclientsettings.json
       - ./WalletsMS/WalletsMS.Client/walletsclientsettings.json:/app/walletsclientsettings.json
       - ./TokensMS/TokensMS.Client/tokensclientsettings.json:/app/tokensclientsettings.json
+      - ./BlockchainParsersMS/BlockchainParsersMS.Client/parsersclientsettings.json:/app/parsersclientsettings.json
     networks:
       inifynetwork:
         ipv4_address: 172.18.0.9

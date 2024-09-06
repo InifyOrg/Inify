@@ -73,7 +73,7 @@ namespace WalletsMS.Client
 
             if (_configurationReady)
             {
-                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/getAllTokensByWalletType/{userId}";
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/getAllWalletsByUserId/{userId}";
 
                 HttpResponseMessage walletsMsResponce = await _httpClient.GetAsync(requestAddress);
 
