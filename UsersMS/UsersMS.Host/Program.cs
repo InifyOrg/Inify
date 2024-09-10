@@ -1,6 +1,7 @@
 using UsersMS.Infrastructure.DataLayer;
 using UsersMS.Infrastructure.Services;
 using UsersMS.Infrastructure;
+using UsersMS.Client;
 using UsersMS.Infrastructure.Domain.DbCtx;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IUsersService, UsersService>();
 
 builder.Services.AddDbContext<UserMsDbContext>();
 
+
 var app = builder.Build();
 
 // Apply migrations
@@ -46,8 +48,9 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
 app.UseAuthorization();
+
+app.UseMiddleware<UsersMsAuthMiddleware>();
 
 app.MapControllers();
 
