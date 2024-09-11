@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TokensMs.Client;
 using TokensMS.Contract;
+using UsersMS.Client;
 
 namespace ApiGateway.Host.Controllers
 {

@@ -15,7 +15,9 @@ services:
 
   usersms:
     image: usersmshost:latest
-    build: ./UsersMS/UsersMS.Host
+    build:
+      context: .
+      dockerfile: ./UsersMS/UsersMS.Host/Dockerfile
     container_name: usersms
     ports:
       - 5107:80
@@ -27,7 +29,10 @@ services:
 
   walletsms:
     image: walletsmshost:latest
-    build: ./WalletsMS/WalletsMS.Host
+    build: 
+      context: .
+      dockerfile: ./WalletsMS/WalletsMS.Host/Dockerfile
+
     container_name: walletsms
     ports:
       - 5065:80
@@ -41,7 +46,9 @@ services:
 
   tokensms:
     image: tokensmshost:latest
-    build: ./TokensMS/TokensMS.Host
+    build: 
+      context: .
+      dockerfile: ./TokensMS/TokensMS.Host/Dockerfile
     container_name: tokensms
     ports:
       - 5181:80
@@ -53,7 +60,9 @@ services:
 
   blockchainparsersms:
     image: blockchainparsersmshost:latest
-    build: ./BlockchainParsersMS/BlockchainParsersMS.Host
+    build: 
+      context: .
+      dockerfile: ./BlockchainParsersMS/BlockchainParsersMS.Host/Dockerfile
     container_name: blockchainparsersms
     ports:
       - 5074:80
@@ -66,7 +75,9 @@ services:
 
   apigateway:
     image: apigatewayhost:latest
-    build: ./ApiGateway/ApiGateway.Host
+    build: 
+      context: .
+      dockerfile: ./ApiGateway/ApiGateway.Host/Dockerfile
     container_name: apigateway
     ports:
       - 5082:80

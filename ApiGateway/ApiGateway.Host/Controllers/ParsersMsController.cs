@@ -2,6 +2,7 @@
 using BlockchainParsersMS.Contract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UsersMS.Client;
 
 namespace ApiGateway.Host.Controllers
 {
@@ -10,19 +11,27 @@ namespace ApiGateway.Host.Controllers
     public class ParsersMsController : ControllerBase
     {
         private readonly IBlockchainParserClient _parserClient;
+        private readonly IUsersMsClient _usersMsClient;
 
-        public ParsersMsController(IBlockchainParserClient parserClient)
+        public ParsersMsController(IBlockchainParserClient parserClient, IUsersMsClient usersMsClient)
         {
             _parserClient = parserClient;
+            _usersMsClient = usersMsClient;
         }
 
         [HttpGet("parseManyByUserId/{userId}")]
-        public async Task<IActionResult> ParseManyByUserId(long userId)
+        public async Task<IActionResult> ParseManyByUserId([FromHeader] string Authorization, long userId)
         {
-            ParsingOutputDTO results = await _parserClient.parseManyByUserId(userId);
-            if (results.Wallets.Count < 1)
-                return NotFound();
-            return Ok(results);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
+
+            if (isAuthorized)
+            {
+                ParsingOutputDTO results = await _parserClient.parseManyByUserId(userId);
+                if (results.Wallets.Count < 1)
+                    return NotFound();
+                return Ok(results);
+            }
+            return Unauthorized();
         }
 
         [HttpGet("parseOneByAddress")]

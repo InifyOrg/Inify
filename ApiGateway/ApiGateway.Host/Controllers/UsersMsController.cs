@@ -18,30 +18,43 @@ namespace ApiGateway.Host.Controllers
 
         // GET: api/<UsersController>
         [HttpGet("getUserById/{id}")]
-        public async Task<IActionResult> GetUserById(long id)
+        public async Task<IActionResult> GetUserById([FromHeader] string Authorization, long id)
         {
-            UserDTO userById = await _usersMsClient.GetUserByID(id);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
 
-            if (userById.Id < 1)
+            if (isAuthorized)
             {
-                return NotFound();
-            }
+                UserDTO userById = await _usersMsClient.GetUserByID(id);
 
-            return Ok(userById);
+                if (userById.Id < 1)
+                {
+                    return NotFound();
+                }
+
+                return Ok(userById);
+            }
+            return Unauthorized();
         }
 
         // GET: api/<UsersController>
         [HttpGet("getUserByEmail/{email}")]
-        public async Task<IActionResult> GetUserByEmail(string email)
+        public async Task<IActionResult> GetUserByEmail([FromHeader] string Authorization, string email)
         {
-            UserDTO userById = await _usersMsClient.GetUserByEmail(email);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
 
-            if (userById.Id < 1)
+            if (isAuthorized)
             {
-                return NotFound();
-            }
+                UserDTO userById = await _usersMsClient.GetUserByEmail(email);
 
-            return Ok(userById);
+                if (userById.Id < 1)
+                {
+                    return NotFound();
+                }
+
+                return Ok(userById);
+            }
+            return Unauthorized();
+
         }
         // POST api/<UsersController>
         [HttpGet("validateLogin/{token}")]
@@ -78,20 +91,33 @@ namespace ApiGateway.Host.Controllers
 
         // PUT api/<UsersController>
         [HttpPut("editUser")]
-        public async Task<IActionResult> EditUser([FromBody] EditUserDTO userToEdit)
+        public async Task<IActionResult> EditUser([FromHeader] string Authorization, [FromBody] EditUserDTO userToEdit)
         {
-            bool isuserEdited = await _usersMsClient.EditUser(userToEdit);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
 
-            return isuserEdited ? Ok(isuserEdited) : Unauthorized(isuserEdited);
+            if (isAuthorized)
+            {
+                bool isuserEdited = await _usersMsClient.EditUser(userToEdit);
+
+                return isuserEdited ? Ok(isuserEdited) : Unauthorized(isuserEdited);
+            }
+            return Unauthorized();
         }
 
         // PUT api/<UsersController>
         [HttpPut("editPassword")]
-        public async Task<IActionResult> EditPassword([FromBody] EditUserPasswordDTO userPasswordToEdit)
+        public async Task<IActionResult> EditPassword([FromHeader] string Authorization, [FromBody] EditUserPasswordDTO userPasswordToEdit)
         {
-            bool isuserEdited = await _usersMsClient.EditUserPassword(userPasswordToEdit);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
 
-            return isuserEdited ? Ok(isuserEdited) : Unauthorized(isuserEdited);
+            if (isAuthorized)
+            {
+                bool isuserEdited = await _usersMsClient.EditUserPassword(userPasswordToEdit);
+
+                return isuserEdited ? Ok(isuserEdited) : Unauthorized(isuserEdited);
+
+            }
+            return Unauthorized();
         }
 
 

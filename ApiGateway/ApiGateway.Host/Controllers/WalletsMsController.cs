@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UsersMS.Client;
 using WalletsMS.Client;
 using WalletsMS.Contract;
 
@@ -10,44 +11,67 @@ namespace ApiGateway.Host.Controllers
     public class WalletsMsController : ControllerBase
     {
         private readonly IWalletsMsClient _walletsMsClient;
+        private readonly IUsersMsClient _usersMsClient;
 
-        public WalletsMsController(IWalletsMsClient walletsMsClient)
+        public WalletsMsController(IWalletsMsClient walletsMsClient, IUsersMsClient usersMsClient)
         {
             _walletsMsClient = walletsMsClient;
+            _usersMsClient = usersMsClient;
         }
 
         [HttpGet("getAllWalletsByUserId/{userId}")]
-        public async Task<IActionResult> GetAllWalletsByUserId(long userId)
+        public async Task<IActionResult> GetAllWalletsByUserId([FromHeader] string Authorization, long userId)
         {
-            List<WalletDTO> walletByUserId = await _walletsMsClient.GetAllWalletsByUserId(userId);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
 
-            if (walletByUserId.Count < 1)
+            if (isAuthorized)
             {
-                return NotFound();
-            }
+                List<WalletDTO> walletByUserId = await _walletsMsClient.GetAllWalletsByUserId(userId);
 
-            return Ok(walletByUserId);
+                if (walletByUserId.Count < 1)
+                {
+                    return NotFound();
+                }
+
+                return Ok(walletByUserId);
+            }
+            return Unauthorized();
+
         }
 
         [HttpPost("addNewWallet")]
-        public async Task<IActionResult> AddNewWallet([FromBody] AddWalletDTO addWalletFromDTO)
+        public async Task<IActionResult> AddNewWallet([FromHeader] string Authorization, [FromBody] AddWalletDTO addWalletFromDTO)
         {
-            WalletDTO walletFromDTO = await _walletsMsClient.AddNewWalletFromDTO(addWalletFromDTO);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
 
-            if (walletFromDTO.Id < 1)
+            if (isAuthorized)
             {
-                return NotFound();
-            }
+                WalletDTO walletFromDTO = await _walletsMsClient.AddNewWalletFromDTO(addWalletFromDTO);
 
-            return Ok(walletFromDTO);
+                if (walletFromDTO.Id < 1)
+                {
+                    return NotFound();
+                }
+
+                return Ok(walletFromDTO);
+
+            }
+            return Unauthorized();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteWallet(long id)
+        public async Task<IActionResult> DeleteWallet([FromHeader] string Authorization, long id)
         {
-            bool isDeleted = await _walletsMsClient.DeleteWalletById(id);
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
 
-            return Ok(isDeleted);
+            if (isAuthorized)
+            {
+                bool isDeleted = await _walletsMsClient.DeleteWalletById(id);
+
+                return Ok(isDeleted);
+            }
+            return Unauthorized();
+
         }
 
 

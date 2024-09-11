@@ -50,8 +50,6 @@ app.UseSwaggerUI();
 
 app.UseAuthorization();
 
-app.UseMiddleware<UsersMsAuthMiddleware>();
-
 app.MapControllers();
 
 app.Run();
