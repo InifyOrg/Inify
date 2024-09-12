@@ -38,6 +38,7 @@ services:
       - 5065:80
     depends_on:
       - mssql
+      - usersms
     volumes:
       - ./UsersMS/UsersMS.Client/usersclientsettings.json:/app/usersclientsettings.json
     networks:
@@ -66,6 +67,8 @@ services:
     container_name: blockchainparsersms
     ports:
       - 5074:80
+    depends_on:
+      - tokensms
     volumes:
       - ./WalletsMS/WalletsMS.Client/walletsclientsettings.json:/app/walletsclientsettings.json
       - ./TokensMS/TokensMS.Client/tokensclientsettings.json:/app/tokensclientsettings.json
@@ -81,6 +84,11 @@ services:
     container_name: apigateway
     ports:
       - 5082:80
+    depends_on:
+      - tokensms
+      - blockchainparsersms
+      - walletsms
+      - usersms
     volumes:
       - ./UsersMS/UsersMS.Client/usersclientsettings.json:/app/usersclientsettings.json
       - ./WalletsMS/WalletsMS.Client/walletsclientsettings.json:/app/walletsclientsettings.json
@@ -89,6 +97,20 @@ services:
     networks:
       inifynetwork:
         ipv4_address: 172.18.0.9
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Frontend/Dockerfile
+    container_name: web
+    ports:
+      - 80:80
+    depends_on:
+      - apigateway
+    networks:
+      inifynetwork:
+        ipv4_address: 172.18.0.10
+
 
 networks:
   inifynetwork:
