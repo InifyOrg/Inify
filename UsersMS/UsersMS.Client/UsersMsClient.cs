@@ -112,9 +112,12 @@ namespace UsersMS.Client
 
                 HttpResponseMessage userMsResponce = await _httpClient.PostAsync(requestAddress, httpContent);
 
-                string jsonUser = await userMsResponce.Content.ReadAsStringAsync();
-                
-                return jsonUser;
+                if (userMsResponce.IsSuccessStatusCode)
+                {
+                    string jsonUser = await userMsResponce.Content.ReadAsStringAsync();
+
+                    return jsonUser;
+                }
             }
 
             return "";

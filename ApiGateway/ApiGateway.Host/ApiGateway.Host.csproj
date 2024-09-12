@@ -17,7 +17,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="TokensMs.Client" Version="1.0.1" />
     <PackageReference Include="TokensMS.Contract" Version="1.0.0" />
-    <PackageReference Include="UsersMS.Client" Version="1.0.4" />
+    <PackageReference Include="UsersMS.Client" Version="1.0.5" />
     <PackageReference Include="UsersMS.Contracts" Version="1.0.2" />
     <PackageReference Include="WalletsMS.Client" Version="1.0.2" />
     <PackageReference Include="WalletsMS.Contract" Version="1.0.0" />
