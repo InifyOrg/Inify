@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TokensMS.Infrastructure.Domain.DbCtx;
 
@@ -10,9 +11,11 @@ using TokensMS.Infrastructure.Domain.DbCtx;
 namespace TokensMS.Infrastructure.Migrations
 {
     [DbContext(typeof(TokensMsDbContext))]
-    partial class TokensMsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240912074914_SeedInitialData")]
+    partial class SeedInitialData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

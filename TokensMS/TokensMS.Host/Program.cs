@@ -34,6 +34,9 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<TokensMsDbContext>();
         context.Database.Migrate();
+
+        var cmcService = services.GetRequiredService<ICoinMarketCapService>();
+        cmcService.UpdateDatabase();
     }
     catch (Exception ex) { throw; }
 }

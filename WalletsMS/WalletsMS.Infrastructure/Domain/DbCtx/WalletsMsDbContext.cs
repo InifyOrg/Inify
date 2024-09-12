@@ -21,6 +21,12 @@ namespace WalletsMS.Infrastructure.Domain.DbCtx
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("WalletsMsDb"));
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<WalletType>()
+                .HasData(new WalletType() { Id = 1, Title = "EVM" });
+        }
+
         public DbSet<WalletType> WalletTypes { get; set; }
         public DbSet<Wallet> Wallet { get; set; }
 
