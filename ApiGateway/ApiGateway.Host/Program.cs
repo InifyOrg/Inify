@@ -21,6 +21,18 @@ builder.Services.AddScoped<IWalletsMsClient, WalletsMsClient>();
 builder.Services.AddScoped<ITokensMsClient, TokensMsClient>();
 builder.Services.AddScoped<IBlockchainParserClient, BlockchainParserClient>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +40,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
