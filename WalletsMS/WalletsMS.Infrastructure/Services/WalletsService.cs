@@ -57,5 +57,13 @@ namespace WalletsMS.Infrastructure.Services
 
             return wallets.Adapt<List<WalletDTO>>();
         }
+
+        public async Task<List<WalletTypeDTO>> GetAllWalletTypes()
+        {
+            List<WalletType> wallets = await _walletsDataLayer.GetWalletTypes();
+
+
+            return wallets.Adapt<List<WalletTypeDTO>>();
+        }
     }
 }

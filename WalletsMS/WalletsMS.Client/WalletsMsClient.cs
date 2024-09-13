@@ -84,5 +84,24 @@ namespace WalletsMS.Client
 
             return wallets;
         }
+
+        public async Task<List<WalletTypeDTO>> GetAllWalletTypes()
+        {
+            List<WalletTypeDTO> wallets = new List<WalletTypeDTO>();
+
+            if (_configurationReady)
+            {
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/getAllWalletTypes";
+
+                HttpResponseMessage walletsMsResponce = await _httpClient.GetAsync(requestAddress);
+
+                string jsonWallet = await walletsMsResponce.Content.ReadAsStringAsync();
+
+                wallets = JsonSerializer.Deserialize<List<WalletTypeDTO>>(jsonWallet);
+            }
+
+            return wallets;
+        }
+
     }
 }

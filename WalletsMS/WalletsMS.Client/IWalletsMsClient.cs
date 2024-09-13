@@ -12,6 +12,7 @@ namespace WalletsMS.Client
         Task<WalletDTO> AddNewWalletFromDTO(AddWalletDTO addWalletFromDTO);
         Task<bool> DeleteWalletById(long id);
         Task<List<WalletDTO>> GetAllWalletsByUserId(long userId);
+        Task<List<WalletTypeDTO>> GetAllWalletTypes();
 
     }
 }

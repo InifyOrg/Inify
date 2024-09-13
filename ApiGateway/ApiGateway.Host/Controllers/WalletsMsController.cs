@@ -39,6 +39,26 @@ namespace ApiGateway.Host.Controllers
 
         }
 
+        [HttpGet("getAllWalletTypes")]
+        public async Task<IActionResult> GetAllWalletTypes([FromHeader] string Authorization)
+        {
+            bool isAuthorized = await _usersMsClient.ValidateAccessToken(Authorization);
+
+            if (isAuthorized)
+            {
+                List<WalletTypeDTO> walletTypes = await _walletsMsClient.GetAllWalletTypes();
+
+                if (walletTypes.Count < 1)
+                {
+                    return NotFound();
+                }
+
+                return Ok(walletTypes);
+            }
+            return Unauthorized();
+
+        }
+
         [HttpPost("addNewWallet")]
         public async Task<IActionResult> AddNewWallet([FromHeader] string Authorization, [FromBody] AddWalletDTO addWalletFromDTO)
         {

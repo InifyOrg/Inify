@@ -8,5 +8,6 @@ namespace WalletsMS.Infrastructure
         Task<WalletTypeDTO> AddNewWalletTypeFromDTO(AddWalletTypeDTO addWalletTypeFromDTO);
         Task<bool> DeleteWalletById(long id);
         Task<List<WalletDTO>> GetAllWalletsByUserId(long userId);
+        Task<List<WalletTypeDTO>> GetAllWalletTypes();
     }
 }

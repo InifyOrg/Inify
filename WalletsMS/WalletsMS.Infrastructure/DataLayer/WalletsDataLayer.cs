@@ -75,5 +75,15 @@ namespace WalletsMS.Infrastructure.DataLayer
                 return walletsById != null ? walletsById : new List<Wallet>();
             }
         }
+
+        public async Task<List<WalletType>> GetWalletTypes()
+        {
+            using (WalletsMsDbContext db = new WalletsMsDbContext())
+            {
+                List<WalletType> walletTypes = db.WalletTypes.ToList();
+
+                return walletTypes;
+            }
+        }
     }
 }

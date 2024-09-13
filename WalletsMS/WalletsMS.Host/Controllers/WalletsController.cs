@@ -29,6 +29,20 @@ namespace WalletsMS.Host.Controllers
             return Ok(walletByUserId);
         }
 
+        [HttpGet("getAllWalletTypes")]
+        public async Task<IActionResult> GetAllWalletTypes()
+        {
+            List<WalletTypeDTO> walletTypes = await _walletsService.GetAllWalletTypes();
+
+            if (walletTypes.Count < 1)
+            {
+                return NotFound();
+            }
+
+            return Ok(walletTypes);
+        }
+
+
         [HttpPost("addNewWallet")]
         public async Task<IActionResult> AddNewWallet([FromBody] AddWalletDTO addWalletFromDTO)
         {
