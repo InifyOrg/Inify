@@ -66,27 +66,31 @@ namespace BlockchainParsersMS.Infrastructure.Services
 
             TypeAdapterConfig<WalletsMS.Contract.WalletDTO, WalletDTO>.NewConfig().Map(dest => dest.Type, src => src.WalletType.Title);
 
+            
             List<WalletDTO> wallets = (await _walletsMsClient.GetAllWalletsByUserId(userId)).Adapt<List<WalletDTO>>();
-            List<ParsedTokenDTO> tokensForStatistics = new List<ParsedTokenDTO>();
+            if (wallets.Count > 0)
+            {
+                List<ParsedTokenDTO> tokensForStatistics = new List<ParsedTokenDTO>();
 
-            IEnumerable<Task> tasks = wallets.Select(async wallet => {
-                WalletParsedInfoDTO walletParsed = new WalletParsedInfoDTO
+                IEnumerable<Task> tasks = wallets.Select(async wallet =>
                 {
-                    Wallet = wallet,
-                    Tokens = await ParseOneByAddress(wallet),
-                };
+                    WalletParsedInfoDTO walletParsed = new WalletParsedInfoDTO
+                    {
+                        Wallet = wallet,
+                        Tokens = await ParseOneByAddress(wallet),
+                    };
 
-                walletParsed.BestToken = GetTotalBestSymbol(walletParsed.Tokens);
-                walletParsed.Balance = GetTotalBalance(walletParsed.Tokens);
+                    walletParsed.BestToken = GetTotalBestSymbol(walletParsed.Tokens);
+                    walletParsed.Balance = GetTotalBalance(walletParsed.Tokens);
 
-                output.Wallets.Add(walletParsed);
-                tokensForStatistics.AddRange(walletParsed.Tokens);
-            });
-            await Task.WhenAll(tasks);
+                    output.Wallets.Add(walletParsed);
+                    tokensForStatistics.AddRange(walletParsed.Tokens);
+                });
+                await Task.WhenAll(tasks);
 
-            output.TotalBalance = GetTotalBalance(tokensForStatistics);
-            output.TotalBestTokenSymbol = GetTotalBestSymbol(tokensForStatistics).Symbol;
-
+                output.TotalBalance = GetTotalBalance(tokensForStatistics);
+                output.TotalBestTokenSymbol = GetTotalBestSymbol(tokensForStatistics).Symbol;
+            }
             return output;
         }
 

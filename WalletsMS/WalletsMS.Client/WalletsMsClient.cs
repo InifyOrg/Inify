@@ -54,10 +54,9 @@ namespace WalletsMS.Client
 
             if (_configurationReady)
             {
-                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/addNewWallet";
-                HttpContent postContetnt = JsonContent.Create(id);
+                string requestAddress = $"{_serviceAddress}/{_apiBaseAddress}/{id}";
 
-                HttpResponseMessage walletsMsResponce = await _httpClient.PostAsync(requestAddress, postContetnt);
+                HttpResponseMessage walletsMsResponce = await _httpClient.DeleteAsync(requestAddress);
 
                 string jsonWallet = await walletsMsResponce.Content.ReadAsStringAsync();
 
@@ -79,7 +78,10 @@ namespace WalletsMS.Client
 
                 string jsonWallet = await walletsMsResponce.Content.ReadAsStringAsync();
 
-                wallets = JsonSerializer.Deserialize<List<WalletDTO>>(jsonWallet);
+                if (walletsMsResponce.IsSuccessStatusCode)
+                {
+                    wallets = JsonSerializer.Deserialize<List<WalletDTO>>(jsonWallet);
+                }
             }
 
             return wallets;
